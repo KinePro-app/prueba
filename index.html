@@ -16,7 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:#07101b; --bg2:#0b1420; --card:#18212c; --line:rgba(255,255,255,.08); --text:#eef3f7; --muted:#9ba7b4;
+  --bg:#060e18; --bg2:#070f1a; --card:#0f1923; --line:rgba(255,255,255,.07); --text:#eef3f7; --muted:#9ba7b4;
   --accent:#53efb9; --accent2:#21c58f; --danger:#c93244; --warn:#ffb84d; --shadow:0 14px 40px rgba(0,0,0,.34);
   --navH:86px; --topSafe:max(14px, env(safe-area-inset-top)); --bottomSafe:max(14px, env(safe-area-inset-bottom));
   --font:Montserrat,Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
@@ -24,8 +24,9 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;margin:0}
 body{font-family:var(--font);color:var(--text);background:
-radial-gradient(circle at top, rgba(83,239,185,.08), transparent 28%),
-linear-gradient(180deg,#06101a 0%,#08101b 35%,#040b14 100%);overflow:hidden}
+            radial-gradient(ellipse at 20% 10%, rgba(83,239,185,.07) 0%, transparent 40%),
+            radial-gradient(ellipse at 80% 80%, rgba(30,60,120,.15) 0%, transparent 50%),
+            linear-gradient(180deg, #060e18 0%, #070f1a 50%, #040c15 100%);overflow:hidden}
 body.theme-light {
   --bg:#f3f7fb; --bg2:#e7edf5; --card:#ffffff; --line:rgba(0,0,0,.08); --text:#101722; --muted:#566375;
   --shadow:0 10px 24px rgba(16,23,34,.12);
@@ -133,6 +134,406 @@ body.theme-light .home-stat{background:#fff}
 .home-live-timer{font-size:3rem;line-height:1;font-weight:900;text-align:center;color:var(--accent);margin:18px 0 14px}
 .home-live-btn{width:100%;min-height:52px;border-radius:14px;background:linear-gradient(180deg,var(--accent),var(--accent2));color:#04110d;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
 @media (max-width:420px){.footer-actions{grid-template-columns:1fr} .digital{font-size:3.1rem} .home-live-timer{font-size:2.6rem} .home-stat .v{font-size:1.76rem}}
+
+/* --- Visual refresh overrides --- */
+.app{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)),
+    radial-gradient(ellipse at top, rgba(83,239,185,.04), transparent 45%);
+}
+.screen.active{animation:fadeSlideUp .3s ease both}
+.bottom-nav{
+  position:absolute;
+  left:0; right:0;
+  height:auto;
+  margin:0 10px calc(10px + var(--bottomSafe));
+  border-radius:28px;
+  border:1px solid rgba(83,239,185,.12);
+  background:linear-gradient(180deg, rgba(12,18,28,.92), rgba(8,14,22,.97));
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  box-shadow:0 -2px 30px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.04) inset;
+  padding:8px 8px calc(8px + var(--bottomSafe));
+  bottom:8px;
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:6px;
+}
+.nav-btn{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.05);
+  border-radius:16px;
+  transition:all .2s ease;
+}
+.nav-btn.active{
+  background:linear-gradient(180deg, rgba(83,239,185,.22), rgba(83,239,185,.10));
+  border:1px solid rgba(83,239,185,.35);
+  border-radius:16px;
+  color:var(--accent);
+  box-shadow:0 0 18px rgba(83,239,185,.18), 0 0 1px rgba(83,239,185,.4) inset;
+}
+.nav-btn:not(.active):hover{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.08)}
+.card,.routine-card,.patient-card,.exec-item,.session-card,.builder-box,.detail-card{
+  background:linear-gradient(160deg, rgba(255,255,255,.045) 0%, rgba(255,255,255,.015) 100%);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:24px;
+  box-shadow:0 8px 28px rgba(0,0,0,.28), 0 1px 0 rgba(255,255,255,.04) inset;
+  transition:border-color .2s ease, box-shadow .2s ease;
+}
+.card:hover,.routine-card:hover,.patient-card:hover,.exec-item:hover,.session-card:hover,.builder-box:hover,.detail-card:hover{
+  border-color:rgba(83,239,185,.18);
+  box-shadow:0 10px 34px rgba(0,0,0,.34), 0 1px 0 rgba(255,255,255,.05) inset;
+}
+.home-stat{
+  position:relative;
+  min-height:138px;
+  background:linear-gradient(145deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+  border:1px solid rgba(83,239,185,.14);
+  box-shadow:0 8px 32px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,.05) inset;
+  border-radius:24px;
+  padding:18px;
+}
+.home-stat .k{
+  font-size:.68rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--muted);
+  font-weight:800;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.home-stat .k::before{
+  content:"";
+  width:32px;
+  height:32px;
+  border-radius:12px;
+  flex:0 0 auto;
+  background:linear-gradient(180deg, rgba(83,239,185,.24), rgba(83,239,185,.08));
+  border:1px solid rgba(83,239,185,.18);
+  box-shadow:0 6px 18px rgba(83,239,185,.12);
+}
+.home-stats-grid .home-stat:nth-child(1) .k::before{
+  background:linear-gradient(180deg, rgba(83,239,185,.24), rgba(83,239,185,.08));
+}
+.home-stats-grid .home-stat:nth-child(2) .k::before{
+  background:linear-gradient(180deg, rgba(85,198,255,.28), rgba(85,198,255,.08));
+  border-color:rgba(85,198,255,.18);
+  box-shadow:0 6px 18px rgba(85,198,255,.12);
+}
+.home-stats-grid .home-stat:nth-child(3) .k::before{
+  background:linear-gradient(180deg, rgba(179,128,255,.28), rgba(179,128,255,.08));
+  border-color:rgba(179,128,255,.18);
+  box-shadow:0 6px 18px rgba(179,128,255,.12);
+}
+.home-stat .v{
+  font-size:2.2rem;
+  font-weight:900;
+  background:linear-gradient(180deg, #eef7ff, #53efb9);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.timer-panel{
+  background:linear-gradient(180deg, rgba(83,239,185,.06), rgba(83,239,185,.02));
+  border:1px solid rgba(83,239,185,.28);
+  border-radius:28px;
+  box-shadow:0 0 40px rgba(83,239,185,.08), 0 14px 40px rgba(0,0,0,.3);
+}
+.digital{
+  font-size:3.8rem;
+  font-weight:900;
+  background:linear-gradient(180deg, #b2fff3, #53efb9);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  letter-spacing:.04em;
+  text-shadow:none;
+  animation:pulseGlow 2s ease-in-out infinite;
+}
+.primary-btn{
+  background:linear-gradient(180deg, #53efb9 0%, #1dbb87 100%);
+  color:#021a0f;
+  font-weight:900;
+  border-radius:18px;
+  box-shadow:0 6px 24px rgba(83,239,185,.32);
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  transition:box-shadow .2s, transform .1s;
+}
+.primary-btn:active{transform:scale(.97);box-shadow:0 3px 12px rgba(83,239,185,.2)}
+.danger-btn{
+  background:linear-gradient(180deg, #d63650 0%, #8f0f22 100%);
+  color:#ffe8eb;
+  border-radius:18px;
+  box-shadow:0 6px 24px rgba(201,50,68,.3);
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+.fab{
+  background:linear-gradient(180deg, #53efb9, #18b880);
+  box-shadow:0 8px 28px rgba(83,239,185,.38), 0 2px 8px rgba(0,0,0,.3);
+  border-radius:20px;
+  transition:transform .15s, box-shadow .15s;
+}
+.fab:active{transform:scale(.93)}
+.home-live-card{animation:pulseGlow 3s ease-in-out infinite}
+@keyframes fadeSlideUp{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes pulseGlow{
+  0%,100%{box-shadow:0 0 16px rgba(83,239,185,.18)}
+  50%{box-shadow:0 0 32px rgba(83,239,185,.38)}
+}
+/* Preserve light theme */
+body.theme-light .bottom-nav{
+  border:1px solid rgba(16,23,34,.08);
+  background:linear-gradient(180deg, rgba(255,255,255,.92), rgba(245,248,252,.97));
+  box-shadow:0 -2px 24px rgba(16,23,34,.08), 0 0 0 1px rgba(255,255,255,.55) inset;
+}
+body.theme-light .nav-btn{
+  background:rgba(16,23,34,.03);
+  border-color:rgba(16,23,34,.06);
+}
+body.theme-light .nav-btn.active{
+  background:linear-gradient(180deg, rgba(83,239,185,.24), rgba(83,239,185,.12));
+  border-color:rgba(83,239,185,.3);
+}
+body.theme-light .card,
+body.theme-light .routine-card,
+body.theme-light .patient-card,
+body.theme-light .exec-item,
+body.theme-light .session-card,
+body.theme-light .builder-box,
+body.theme-light .detail-card,
+body.theme-light .home-stat,
+body.theme-light .timer-panel{
+  background:#fff;
+}
+body.theme-light .home-stat{
+  border-color:rgba(16,23,34,.08);
+  box-shadow:0 10px 26px rgba(16,23,34,.08), 0 1px 0 rgba(255,255,255,.75) inset;
+}
+body.theme-light .home-stat .v,
+body.theme-light .digital{
+  background:linear-gradient(180deg, #12324b, #18b880);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+
+/* Responsive breakpoints */
+@media (max-width:599px){
+  :root{
+    --topSafe:max(14px, env(safe-area-inset-top));
+    --bottomSafe:max(14px, env(safe-area-inset-bottom));
+  }
+  body{overflow:hidden}
+}
+
+@media (min-width:600px){
+  :root{--topSafe:0px;--bottomSafe:0px}
+  body{overflow:auto}
+  .app{
+    max-width:100%;
+    height:auto;
+    min-height:100dvh;
+    overflow:visible;
+  }
+  main{
+    height:auto;
+    overflow:visible;
+  }
+  .screen{
+    position:relative;
+    display:none;
+    overflow:visible;
+    padding:24px 24px 40px;
+  }
+  .screen.active{display:block}
+  .topbar{margin-bottom:24px}
+  .title{font-size:1.4rem}
+  .avatar{width:48px;height:48px;border-radius:14px}
+  .searchbar,.input,.textarea,.select{min-height:54px;font-size:1rem}
+  .field{gap:10px}
+  .quick-btn{min-height:100px;padding:16px}
+  .primary-btn,.secondary-btn,.danger-btn{min-height:56px;font-size:1rem}
+  .home-stat .v{font-size:2.4rem}
+  .session-time{font-size:2.6rem}
+  .home-live-timer{font-size:3.4rem}
+  .modal-backdrop{
+    align-items:center;
+    justify-content:center;
+    padding:32px;
+  }
+  .sheet{
+    border-radius:28px;
+    max-width:560px;
+    width:100%;
+    max-height:85dvh;
+  }
+}
+
+@media (min-width:600px) and (max-width:1024px){
+  .bottom-nav{
+    position:fixed;
+    top:0;
+    bottom:auto;
+    left:0;
+    right:0;
+    height:70px;
+    border-radius:0;
+    border-top:none;
+    border-bottom:1px solid var(--line);
+    padding:0 24px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    z-index:100;
+    margin:0;
+  }
+  .nav-btn{
+    min-height:46px;
+    padding:6px 12px;
+    flex:1 1 0;
+  }
+  .screen{
+    padding-top:calc(70px + 24px);
+  }
+  .fab{
+    bottom:28px;
+    right:28px;
+    left:auto;
+  }
+  .home-stats-grid{grid-template-columns:repeat(3, 1fr)}
+  .home-stat.full{grid-column:1 / -1}
+  .grid2{grid-template-columns:repeat(3, 1fr)}
+  .grid3{grid-template-columns:repeat(4, 1fr)}
+}
+
+@media (min-width:1025px){
+  body{overflow:auto}
+  .app{
+    display:flex;
+    flex-direction:row;
+    max-width:100%;
+    height:100dvh;
+  }
+  .bottom-nav{
+    position:fixed;
+    top:0;
+    left:0;
+    bottom:0;
+    width:220px;
+    height:100dvh;
+    flex-direction:column;
+    justify-content:flex-start;
+    align-items:stretch;
+    gap:6px;
+    padding:32px 12px 24px;
+    border-right:1px solid var(--line);
+    border-top:none;
+    border-radius:0;
+    grid-template-columns:1fr;
+    background:linear-gradient(180deg, rgba(8,14,24,.98), rgba(6,11,19,.99));
+    margin:0;
+    display:flex;
+  }
+  .bottom-nav::before{
+    content:'KINEPRO';
+    display:block;
+    font-size:1.05rem;
+    font-weight:900;
+    color:var(--accent);
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    padding:0 16px 24px;
+    border-bottom:1px solid var(--line);
+    margin-bottom:16px;
+  }
+  .nav-btn{
+    flex-direction:row;
+    justify-content:flex-start;
+    gap:12px;
+    padding:14px 16px;
+    font-size:.82rem;
+    letter-spacing:.06em;
+    border-radius:16px;
+    width:100%;
+  }
+  .nav-btn .nav-ico{width:26px;height:26px}
+  main{
+    margin-left:220px;
+    flex:1;
+    height:100dvh;
+    overflow-y:auto;
+  }
+  .screen{
+    padding:32px 40px 60px;
+    max-width:1200px;
+  }
+  .fab{
+    left:calc(220px + 24px);
+    right:auto;
+    bottom:32px;
+  }
+  .home-stats-grid{grid-template-columns:repeat(4, 1fr)}
+  .home-stat.full{grid-column:span 2}
+  .grid2{grid-template-columns:repeat(4, 1fr)}
+  .grid3{grid-template-columns:repeat(6, 1fr)}
+  #homeSessionsList{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:16px;
+  }
+  #routinesList,#patientsList{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:14px;
+  }
+  .topbar .avatar,.topbar .eyebrow{display:none}
+  .topbar .title{font-size:1.6rem}
+  .modal-backdrop{
+    align-items:center;
+    justify-content:center;
+    padding:40px;
+  }
+  .sheet{
+    border-radius:28px;
+    max-width:560px;
+    width:100%;
+    max-height:85dvh;
+  }
+  .builder-box .field-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  .footer-actions{grid-template-columns:repeat(3, 1fr)}
+  .timer-panel{max-width:480px;margin:0 auto 24px}
+  .digital{font-size:5rem}
+  .primary-btn:hover{
+    box-shadow:0 8px 32px rgba(83,239,185,.45);
+    filter:brightness(1.06);
+  }
+  .danger-btn:hover{
+    box-shadow:0 8px 28px rgba(201,50,68,.4);
+    filter:brightness(1.08);
+  }
+  .nav-btn:hover:not(.active){
+    background:rgba(255,255,255,.06);
+    border-color:rgba(255,255,255,.1);
+    color:var(--text);
+  }
+  button,.nav-btn,.quick-btn{cursor:pointer}
+  .home-stat .v{font-size:2.8rem}
+  .home-greeting .hello{font-size:1.5rem}
+  .section-title{font-size:1.15rem}
+  .routine-title,.patient-name{font-size:1.12rem}
+}
+
 </style>
 </head>
 <body>
@@ -317,10 +718,115 @@ body.theme-light .home-stat{background:#fff}
   </div>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 <script>
+const firebaseConfig = {
+  apiKey: "AIzaSyDBFPOHtc3LtwBcaifGc2TWaMzWReWmq_4",
+  authDomain: "kinepro-8a56b.firebaseapp.com",
+  projectId: "kinepro-8a56b",
+  storageBucket: "kinepro-8a56b.firebasestorage.app",
+  messagingSenderId: "126558895981",
+  appId: "1:126558895981:web:64cfdc294935272861e464"
+};
+const firebaseApp = firebase.apps.length ? firebase.app() : firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const CLOUD_DOC_REF = db.collection("kinepro").doc("appState");
+
 const prokinesis = [{"name": "Elongación fascia sentado", "category": "MOVILIDAD Y ACTIVACIÓN ESCAPULAR", "type": "Movilidad"}, {"name": "Elongación psoas dinámica", "category": "MOVILIDAD Y ACTIVACIÓN ESCAPULAR", "type": "Movilidad"}, {"name": "Estocada con rotación contraria con pesa rusa", "category": "MOVILIDAD Y ACTIVACIÓN ESCAPULAR", "type": "Movilidad"}, {"name": "Postura caballero manos juntas movilidad escapular", "category": "MOVILIDAD Y ACTIVACIÓN ESCAPULAR", "type": "Movilidad"}, {"name": "Spiderman (toco tobillos rotando)", "category": "MOVILIDAD Y ACTIVACIÓN ESCAPULAR", "type": "Movilidad"}, {"name": "Tocar rodillas en rotación", "category": "MOVILIDAD Y ACTIVACIÓN ESCAPULAR", "type": "Movilidad"}, {"name": "Espinales + movilidad escapular alternada", "category": "MOVILIDAD Y ACTIVACIÓN ESCAPULAR", "type": "Movilidad"}, {"name": "Retracción escapular con banda en codos", "category": "MOVILIDAD Y ACTIVACIÓN ESCAPULAR", "type": "Movilidad"}, {"name": "Rotación externa de hombro con banda", "category": "MOVILIDAD Y ACTIVACIÓN ESCAPULAR", "type": "Movilidad"}, {"name": "Superman", "category": "CORE / ESCÁPULA / ESTABILIDAD", "type": "Estabilidad"}, {"name": "Plancha alta con transferencia de mancuerna", "category": "CORE / ESCÁPULA / ESTABILIDAD", "type": "Estabilidad"}, {"name": "Plancha con apertura lateral y diagonal con banda", "category": "CORE / ESCÁPULA / ESTABILIDAD", "type": "Estabilidad"}, {"name": "Plancha baja con rotación escapular con mancuerna", "category": "CORE / ESCÁPULA / ESTABILIDAD", "type": "Estabilidad"}, {"name": "Plancha alta a plancha baja con rodillas al pecho", "category": "CORE / ESCÁPULA / ESTABILIDAD", "type": "Estabilidad"}, {"name": "Oblicuos con pesa rusa", "category": "CORE / ESCÁPULA / ESTABILIDAD", "type": "Estabilidad"}, {"name": "Bicho muerto (y sus variantes)", "category": "CORE / ESCÁPULA / ESTABILIDAD", "type": "Estabilidad"}, {"name": "Rotaciones con banda arrodillado (Pallof press)", "category": "CORE / ESCÁPULA / ESTABILIDAD", "type": "Estabilidad"}, {"name": "Plancha lateral con mancuerna y flexión de rodilla", "category": "CORE / ESCÁPULA / ESTABILIDAD", "type": "Estabilidad"}, {"name": "Abductores en plancha lateral con disco", "category": "CORE / ESCÁPULA / ESTABILIDAD", "type": "Estabilidad"}, {"name": "Vitalización en caballero con kettlebell invertida", "category": "CORE / ESCÁPULA / ESTABILIDAD", "type": "Estabilidad"}, {"name": "Plancha y pies (adentro, afuera, arriba y abajo)", "category": "CORE / ESCÁPULA / ESTABILIDAD", "type": "Estabilidad"}, {"name": "Plancha y rodillas al medio y afuera", "category": "CORE / ESCÁPULA / ESTABILIDAD", "type": "Estabilidad"}, {"name": "Aductores banco plancha lateral (Copenhague)", "category": "CORE / ESCÁPULA / ESTABILIDAD", "type": "Estabilidad"}, {"name": "Bisagra de cadera con estiramiento posterior", "category": "MOVILIDAD CADENA POSTERIOR", "type": "Flexibilidad"}, {"name": "Elongación fascia (aguantando respiración)", "category": "MOVILIDAD CADENA POSTERIOR", "type": "Flexibilidad"}, {"name": "Elongación de columna en cruz", "category": "MOVILIDAD CADENA POSTERIOR", "type": "Flexibilidad"}, {"name": "Saltos laterales alternados sobre cajón", "category": "FUERZA TREN INFERIOR / POTENCIA", "type": "Fuerza"}, {"name": "Peso muerto con barra", "category": "FUERZA TREN INFERIOR / POTENCIA", "type": "Fuerza"}, {"name": "Búlgaras con vuelos laterales", "category": "FUERZA TREN INFERIOR / POTENCIA", "type": "Fuerza"}, {"name": "Sentadilla tocando tobillos alternados", "category": "FUERZA TREN INFERIOR / POTENCIA", "type": "Fuerza"}, {"name": "Desplazamiento lateral con banda + sentadilla", "category": "FUERZA TREN INFERIOR / POTENCIA", "type": "Fuerza"}, {"name": "Sentadilla con pesa rusa y banda en los pies", "category": "FUERZA TREN INFERIOR / POTENCIA", "type": "Fuerza"}, {"name": "Sentadillas en TRX", "category": "FUERZA TREN INFERIOR / POTENCIA", "type": "Fuerza"}, {"name": "Subida al cajón con mancuernas + press hombro", "category": "FUERZA TREN INFERIOR / POTENCIA", "type": "Fuerza"}, {"name": "Subida al cajón con pesa rusa", "category": "FUERZA TREN INFERIOR / POTENCIA", "type": "Fuerza"}, {"name": "Sentadilla + saltos potencia", "category": "FUERZA TREN INFERIOR / POTENCIA", "type": "Fuerza"}, {"name": "Saltos a la barra a una pierna", "category": "FUERZA TREN INFERIOR / POTENCIA", "type": "Fuerza"}, {"name": "Sentadilla con barra", "category": "FUERZA TREN INFERIOR / POTENCIA", "type": "Fuerza"}, {"name": "Dominadas", "category": "FUERZA TREN SUPERIOR", "type": "Fuerza"}, {"name": "Dominadas con peso", "category": "FUERZA TREN SUPERIOR", "type": "Fuerza"}, {"name": "Aperturas de pecho en banco o pelota", "category": "FUERZA TREN SUPERIOR", "type": "Fuerza"}, {"name": "Flexiones con remo", "category": "FUERZA TREN SUPERIOR", "type": "Fuerza"}, {"name": "Flexiones de brazos con flexión de rodilla explosiva", "category": "FUERZA TREN SUPERIOR", "type": "Fuerza"}, {"name": "Remo con banda elástica", "category": "FUERZA TREN SUPERIOR", "type": "Fuerza"}, {"name": "Pecho / remo en TRX", "category": "FUERZA TREN SUPERIOR", "type": "Fuerza"}, {"name": "Press de hombro con banda en la panza", "category": "FUERZA TREN SUPERIOR", "type": "Fuerza"}, {"name": "Estocada con press de hombro unilateral", "category": "FUERZA INTEGRADA (PIERNAS + BRAZOS)", "type": "Fuerza"}, {"name": "Peso muerto con arranque de potencia unilateral", "category": "FUERZA INTEGRADA (PIERNAS + BRAZOS)", "type": "Fuerza"}, {"name": "Peso muerto unipodal + press de hombros potente", "category": "FUERZA INTEGRADA (PIERNAS + BRAZOS)", "type": "Fuerza"}, {"name": "Peso muerto unipodal + bíceps", "category": "FUERZA INTEGRADA (PIERNAS + BRAZOS)", "type": "Fuerza"}, {"name": "Peso muerto unipodal + remo", "category": "FUERZA INTEGRADA (PIERNAS + BRAZOS)", "type": "Fuerza"}, {"name": "Puente glúteo unilateral con press de pecho alternado", "category": "FUERZA INTEGRADA (PIERNAS + BRAZOS)", "type": "Fuerza"}, {"name": "Press en piso + puente glúteo (press pecho explosivo)", "category": "FUERZA INTEGRADA (PIERNAS + BRAZOS)", "type": "Fuerza"}, {"name": "Estocada + rotaciones con disco o pesa", "category": "FUERZA INTEGRADA (PIERNAS + BRAZOS)", "type": "Fuerza"}, {"name": "Arrodillado a parado con bíceps + hombro", "category": "FUERZA INTEGRADA (PIERNAS + BRAZOS)", "type": "Fuerza"}, {"name": "Burpees", "category": "FUERZA INTEGRADA (PIERNAS + BRAZOS)", "type": "Fuerza"}];
 const ces757 = [{"name": "VITALIZACION", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "VITALIZACION A 1 PP INES", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "VITALIZACION DOBLE INESTABLE", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "VITALIZACION DEL CENTRO CRUZ ARRIBA", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "VITALIZACION CRUZ DE ABAJO AL CENTRO", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "VITALIZACION + ELAS LAT", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "VITALIZACION A 1 BB", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "VITALIZACION A 1 BB Y 1 PP INES", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "VITALIZACION A 1 BB DOBLE INESTABLE", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "VITALIZACION A 1 BB + ELAST LAT", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "MEDIA VITALIZACION", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "MEDIA VITALIZACION A 1 PP INES", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "MEDIA VITALIZACION DOBLE INES", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "MEDIA VITALIZACION A 1 BB", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "MEDIA VITALIZACION A 1 BB Y 1 PP INES", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "MEDIA VITALIZACION A 1 BB Y DOBLE INES", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "MEDIA VITALIZACION + ELAS LATERAL", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMPUJE DE FZA CON BARRA DE PNTA 2 BB", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMPUJE DE FZA CON BARRA DE PNTA 1 BB", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMPUJE DE FZA CON B.PNTA 2 BB + 1PP IN", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMPUJE DE FZA CON B.PNTA 2 BB + 2 INES", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMPUJE DE FZA CON B.PNTA 1 BB + 1PP IN", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMPUJE DE FZA CON B.PNTA 1 BB + 2 INES", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMP.DE FZA CON B.PNTA 2 BB + ELAS ADUC", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMP. DE FZA CON B. PNTA 1 BB + EL ADUC", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMP. DE FZA EN SPLIT CON B. PNTA A 2 BB", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMP. DE FZA EN SPLIT CON B. PNTA A 1 BB", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMPUJE DE FZA A 1 BB", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMPUJE DE FZA A 1 BB Y 1 PP INES", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMPUJE DE FZA A 1 BB DOBLE INESTABLE", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMPUJE DE FZA A 2 BB CON MANC", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMPUJE DE FZA A 2 BB CON 1 PP INES", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMPUJE DE FZA A 2 BB CON DOBLE INES", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMPUJE DE FZA CON BARRA", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMP. DE FZA CON B. Y DISCOS COLGANDO", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMPUJE DE FZA A 1 BB + ELAS LAT", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMPUJE DE FZA A 1 BB + ELAS FRONT", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMPUJE DE FZA A 2 BB + ELAS LAT", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMPUJE DE FZA A 2 BB + ELAS FRONT", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMP. DE FZA A 1 BB 1PP INES + ELAS FRONT", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMP. DE FZA A 2 BB 1PP INES + ELAS FRONT", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMPUJE DE FZA A 1 BB + ELAS ADUC", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMPUJE DE FZA A 2 BB + ELAS ADUC", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMPUJE DE FZA EN SPLIT A 1 BB CON MANC", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMPUJE DE FZA EN SPLIT A 2 BB CON MANC", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMPUJE DE FZA EN SENT BULG A 1 BB", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "EMPUJE DE FZA EN SENT BULG A 2 BB", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "FZA CON IMPULSO A 1 BB CON MANC", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "FZA CON IMPULSO A 2 BB CON MANC", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "FZA CON IMPULSO CON BARRA", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "FZA CON IMP. CON B. Y DISC COLGANDO", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "FZA CON IMPULSO A 1 BB + ELAS LAT", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "FZA CON IMPULSO A 1 BB + ELAS FRONT", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "FZA CON IMPULSO A 2 BB + ELAS LAT", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "FZA CON IMPULSO A 2 BB + ELAS FRONT", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "FZA CON IMPULSO A 1 BB + ELAS ADUC", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "FZA CON IMPULSO A 2 BB + ELAS ADUC", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "FZA CON IMPULSO CON B. + ELAS ADUC", "category": "ACTIVADORES NO OLIMPICOS"}, {"name": "2DO TIEMPO A 1 BB CON BARRA DE PNTA", "category": "ACTIVADORES DLP"}, {"name": "2DO TIEMPO A 2 BB CON BARRA DE PNTA", "category": "ACTIVADORES DLP"}, {"name": "2DO TIEMPO A 1BB CON MANC", "category": "ACTIVADORES DLP"}, {"name": "2DO TIEMPO A 2BB CON MANC", "category": "ACTIVADORES DLP"}, {"name": "2DO TIEMPO CON BARRA POR DETRÁS", "category": "ACTIVADORES DLP"}, {"name": "2DO TIEMPO A 1 PP Y 1 BB HL.", "category": "ACTIVADORES DLP"}, {"name": "2DO TIEMPO A 1 PP Y 1 BB CL.", "category": "ACTIVADORES DLP"}, {"name": "2DO TIEMPO A 1 PP Y 2 BB MANC", "category": "ACTIVADORES DLP"}, {"name": "2DO TIEMPO CON BARRA POR DELANTE", "category": "ACTIVADORES DLP"}, {"name": "2 TIEMPO B. PNTA (CON TIJERA)", "category": "ACTIVADORES DLP"}, {"name": "2 TIEMPO X DETRÁS (CON TIJERA)", "category": "ACTIVADORES DLP"}, {"name": "2 TIEMPO X DELANTE (CON TIJERA)", "category": "ACTIVADORES DLP"}, {"name": "ARRANQUE DE FZA A 1 BB", "category": "ACTIVADORES DLP"}, {"name": "ARRANQUE DE FZA A 1 BB Y 1 PP INES", "category": "ACTIVADORES DLP"}, {"name": "ARRANQUE DE POT A 1 BB", "category": "ACTIVADORES DLP"}, {"name": "ARR DE FZA DE INGLE", "category": "ACTIVADORES DLP"}, {"name": "ARR DE FZA DE MEDIO MUSLO", "category": "ACTIVADORES DLP"}, {"name": "ARR DE FZA COLGADO", "category": "ACTIVADORES DLP"}, {"name": "ARR DE POTENCIA DE INGLE", "category": "ACTIVADORES DLP"}, {"name": "ARR DE POTENCIA DE MEDIO MUSLO", "category": "ACTIVADORES DLP"}, {"name": "ARR DE POTENCIA COLGADO", "category": "ACTIVADORES DLP"}, {"name": "ARR DE POT. DE SOPORTE MEDIO MUSLO", "category": "ACTIVADORES DLP"}, {"name": "ARR DE POTENCIA DE SOPORTE COLGADO", "category": "ACTIVADORES DLP"}, {"name": "ARR DE POTENCIA DE SOPORTE B.R.", "category": "ACTIVADORES DLP"}, {"name": "ARR FRANCES", "category": "ACTIVADORES DLP"}, {"name": "ARR ALTERNO 1 PP/1 BB", "category": "ACTIVADORES DLP"}, {"name": "ARRANQUE ALTO DE VELOCIDAD", "category": "ACTIVADORES DLP"}, {"name": "METIDAS DE ARRANQUE CON INSTR. DE GUE", "category": "ACTIVADORES DLP"}, {"name": "METIDAS DE ARRANQUE", "category": "ACTIVADORES DLP"}, {"name": "METIDAS DE ARRANQUE A 2 O 3 POSICIONES", "category": "ACTIVADORES DLP"}, {"name": "CARG DE POT A 1 PP CON BARRA", "category": "ACTIVADORES DLP"}, {"name": "CARG DE POT A 1 PP + ELAS LAT. EN ROD.", "category": "ACTIVADORES DLP"}, {"name": "CARG DE POT A 1 PP + ELAS FRONT. EN ROD.", "category": "ACTIVADORES DLP"}, {"name": "CARG DE FZA DE MEDIO MUSLO", "category": "ACTIVADORES DLP"}, {"name": "CARG DE FZA DE COLGADO", "category": "ACTIVADORES DLP"}, {"name": "CARG DE POTENCIA DE MEDIO MUSLO", "category": "ACTIVADORES DLP"}, {"name": "CARG DE POTENCIA COLGADO", "category": "ACTIVADORES DLP"}, {"name": "CARG DE POT. DE SOPORTE MEDIO MUSLO", "category": "ACTIVADORES DLP"}, {"name": "CARG DE POT. DE SOPORTE COLGDADO", "category": "ACTIVADORES DLP"}, {"name": "CARG DE POT. DE SOPORTE B.R.", "category": "ACTIVADORES DLP"}, {"name": "CARG DE POT. COLGADO BAJO RODILLA", "category": "ACTIVADORES DLP"}, {"name": "CARG DE POT DE 1/2 MUSLO A LA FRANCESA", "category": "ACTIVADORES DLP"}, {"name": "CARG DE POT COLG A LA FRANCESA", "category": "ACTIVADORES DLP"}, {"name": "ENVION A UN PIE CON MANC", "category": "ACTIVADORES DLP"}, {"name": "SENTADILLA DE ARRANQUE", "category": "ACTIVADORES DLP"}, {"name": "SENTADILLA DE ARRANQUE CON MANC", "category": "ACTIVADORES DLP"}, {"name": "SENTADILLA DE ARRANQUE A 1 BB", "category": "ACTIVADORES DLP"}, {"name": "1ER TIRON DE ARR", "category": "PESAS"}, {"name": "1ER TIRON DE ENV", "category": "PESAS"}, {"name": "TIRON DE ARR", "category": "PESAS"}, {"name": "TIRON DE ENV", "category": "PESAS"}, {"name": "TRANSICION DE TIRON ARRANQUE", "category": "PESAS"}, {"name": "TRANSICION DE TIRON CARGADA", "category": "PESAS"}, {"name": "2DO TIRON DE ARR", "category": "PESAS"}, {"name": "2DO TIRON DE ENV", "category": "PESAS"}, {"name": "ARRANQUE DE POT", "category": "PESAS"}, {"name": "ARRANQUE CLASICO", "category": "PESAS"}, {"name": "ARRANQUE COLGADO", "category": "PESAS"}, {"name": "CARGADAS DE POT", "category": "PESAS"}, {"name": "CARGADAS", "category": "PESAS"}, {"name": "CARGADA DE POT + FZA CON IMPULSO", "category": "PESAS"}, {"name": "CARGADA DE POT + 2DO TIEMPO", "category": "PESAS"}, {"name": "CARGADAS + FZA CON IMPULSO", "category": "PESAS"}, {"name": "CARG DE POT COLGADO + FZA CON IMP.", "category": "PESAS"}, {"name": "CARG DE POT COLGADO + 2DO TIEMPO", "category": "PESAS"}, {"name": "ENVION DE POT", "category": "PESAS"}, {"name": "ENVION CLASICO", "category": "PESAS"}, {"name": "REMO CHINO", "category": "PESAS"}, {"name": "ARRANQUE DE INGLE", "category": "PESAS"}, {"name": "CARGADA DE MEDIO MUSLO", "category": "PESAS"}, {"name": "ENVION DE MEDIO MUSLO", "category": "PESAS"}, {"name": "SENTADILLAS BULGARAS CON MANC", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLAS BULGARAS A 1 MANC CL.", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLAS BULGARAS CON BARRA", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLAS BULG. CON DISC COLGANDO", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLAS BULGARAS EN TRX Y MANC", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLAS BULGARAS CON PP INES", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLAS BULGARAS DE ARR CON MANC", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLAS BULGARAS DE ARR PALITO", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLAS BULG. DE ARR CON BARRA", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLAS BULG. DE ARR CON ELAST", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLAS BULGARAS COPA", "category": "PP CADENA ANTERIOR"}, {"name": "SUBIDAS AL BANCO CON MANC", "category": "PP CADENA ANTERIOR"}, {"name": "SUBIDAS AL BANCO CON BARRA", "category": "PP CADENA ANTERIOR"}, {"name": "SUBIDAS AL BANCO A 1 BB HL.", "category": "PP CADENA ANTERIOR"}, {"name": "SUBIDAS AL BANCO A 1 BB CL.", "category": "PP CADENA ANTERIOR"}, {"name": "SUBIDAS AL BANCO + ELAS FROT", "category": "PP CADENA ANTERIOR"}, {"name": "SUBIDAS AL BANCO + ELAS LAT", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLA A 1 PP CON APOYO", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLA A 1 PP SIN APOYO", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLA A 1 PP SIN APOYO + ELAS", "category": "PP CADENA ANTERIOR"}, {"name": "SPLITS CON MANC", "category": "PP CADENA ANTERIOR"}, {"name": "SPLITS CON MANC 1 BB CL.", "category": "PP CADENA ANTERIOR"}, {"name": "SPLITS CON BARRA", "category": "PP CADENA ANTERIOR"}, {"name": "SPLITS CON DISC COLGANDO", "category": "PP CADENA ANTERIOR"}, {"name": "SPLITS HIPER CON MANC", "category": "PP CADENA ANTERIOR"}, {"name": "SPLITS HIPER CON BARRA", "category": "PP CADENA ANTERIOR"}, {"name": "SPLITS COPA", "category": "PP CADENA ANTERIOR"}, {"name": "ESTOCADAS HACIA ATRÁS CON MANC", "category": "PP CADENA ANTERIOR"}, {"name": "ESTOCADAS HACIA ATRÁS COPA", "category": "PP CADENA ANTERIOR"}, {"name": "DESPEGUE SUMO", "category": "PP CADENA ANTERIOR"}, {"name": "DESPEGUE SUMO HIPER", "category": "PP CADENA ANTERIOR"}, {"name": "DESPEGUE SUMO DESDE PISO CON BARRA", "category": "PP CADENA ANTERIOR"}, {"name": "DESPEGUE SUMO A 1 PP INES", "category": "PP CADENA ANTERIOR"}, {"name": "DESPEGUE SUMO DOBLE INES", "category": "PP CADENA ANTERIOR"}, {"name": "DESPEGUE SUMO CON BARRA DE PNTA", "category": "PP CADENA ANTERIOR"}, {"name": "DESPEGUE ROMANO", "category": "PP CADENA ANTERIOR"}, {"name": "DESPEGUE ROMANO HIPER", "category": "PP CADENA ANTERIOR"}, {"name": "1/4 DE DESPEGUE ROMANO", "category": "PP CADENA ANTERIOR"}, {"name": "DESPEGUE ROMANO A 1 PP INES", "category": "PP CADENA ANTERIOR"}, {"name": "DESPEGUE ROMANO DESDE PISO", "category": "PP CADENA ANTERIOR"}, {"name": "GRUYA", "category": "PP CADENA ANTERIOR"}, {"name": "GRUYA INESTABLE", "category": "PP CADENA ANTERIOR"}, {"name": "GRUYA + SALTO", "category": "PP CADENA ANTERIOR"}, {"name": "GRUYA + ELAS LAT", "category": "PP CADENA ANTERIOR"}, {"name": "PISTOLAS A 2 PP", "category": "PP CADENA ANTERIOR"}, {"name": "PISTOLAS A 1 PP", "category": "PP CADENA ANTERIOR"}, {"name": "PISTOLAS A 1 PP + ELAS LAT", "category": "PP CADENA ANTERIOR"}, {"name": "PISTOLAS A 1 PP + ELAS FRONT", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLAS ADEL CON BB EXTENDIDOS", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLAS ATRÁS", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLAS ADELANTE", "category": "PP CADENA ANTERIOR"}, {"name": "SENT. (DEL. O DET.) CON DISC COLGANDO", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLA CON BARRA DE PNTA", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLAS LATERALES", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLA COPA", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLA COPA A 1 PP INES", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLA COPA DOBLE INES", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLA CAJON X DETRÁS", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLA CAJON X DELANTE", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLA CAJON COPA", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLA SISSY", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLA A 1 PP CON TRX", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLA EMPUJANDO FB", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLA EMPUJANDO FB A 1 PP", "category": "PP CADENA ANTERIOR"}, {"name": "ISOMETRICO DE CUADRICEP 45\"+ 45\"", "category": "PP CADENA ANTERIOR"}, {"name": "CUADRICERA", "category": "PP CADENA ANTERIOR"}, {"name": "CUADRICERA + ISOM 15\" + 15\"", "category": "PP CADENA ANTERIOR"}, {"name": "VASTO INTERNO CON ELAS", "category": "PP CADENA ANTERIOR"}, {"name": "VASTO EXTERNO CON ELAS", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLA ATRÁS 3:1: 3", "category": "PP CADENA ANTERIOR"}, {"name": "SENTADILLA ADELANTE 3:1:3", "category": "PP CADENA ANTERIOR"}, {"name": "ELEV DE CAD A 2 PP", "category": "PP CADENA POSTERIOR"}, {"name": "ELEV DE CAD A 2 PP INES", "category": "PP CADENA POSTERIOR"}, {"name": "ELEV DE CAD A 2 PP + ELAS ADUC", "category": "PP CADENA POSTERIOR"}, {"name": "ELEV DE CAD A 2 PP INES + ELAS ADUC", "category": "PP CADENA POSTERIOR"}, {"name": "ELEV DE CAD A 2 PP SOBRE FB", "category": "PP CADENA POSTERIOR"}, {"name": "ELEV DE CAD A 2 PP SOBRE FB + ELAS ADUC", "category": "PP CADENA POSTERIOR"}, {"name": "ELEV DE CAD 2 PP ISOM 20\"", "category": "PP CADENA POSTERIOR"}, {"name": "ELEV DE CAD A 2 PP SOBRE MANC", "category": "PP CADENA POSTERIOR"}, {"name": "ELEV DE CAD A 2 PP CON BARRA", "category": "PP CADENA POSTERIOR"}, {"name": "ELEV DE CAD A 2 PP EN TRX", "category": "PP CADENA POSTERIOR"}, {"name": "ELEV DE CAD A 1 PP", "category": "PP CADENA POSTERIOR"}, {"name": "ELEV DE CAD A 1 PP INES", "category": "PP CADENA POSTERIOR"}, {"name": "ELEV DE CAD A 1 PP + ELAS ADUC", "category": "PP CADENA POSTERIOR"}, {"name": "ELEV DE CAD A 1 PP INES + ELAS ADUC", "category": "PP CADENA POSTERIOR"}, {"name": "ELEV DE CAD A 1 PP SOBRE FB", "category": "PP CADENA POSTERIOR"}, {"name": "ELEV DE CAD A 1 PP SOBRE FB + ELAS ADUC", "category": "PP CADENA POSTERIOR"}, {"name": "ELEV DE CAD 1 PP ISOM 20\"", "category": "PP CADENA POSTERIOR"}, {"name": "ELEV DE CAD A 1 PP SOBRE MANC", "category": "PP CADENA POSTERIOR"}, {"name": "ELEV DE CAD A 1 PP CON BARRA", "category": "PP CADENA POSTERIOR"}, {"name": "ELEV DE CAD A 1 PP EN TRX", "category": "PP CADENA POSTERIOR"}, {"name": "ELEV DE CAD + MB EN ADUC", "category": "PP CADENA POSTERIOR"}, {"name": "ELEV DE CAD + FB EN ADUC", "category": "PP CADENA POSTERIOR"}, {"name": "PATADAS AL CIELO", "category": "PP CADENA POSTERIOR"}, {"name": "PATADAS AL CIELO SOBRE INES", "category": "PP CADENA POSTERIOR"}, {"name": "PATADAS AL CIELO CON ELAS", "category": "PP CADENA POSTERIOR"}, {"name": "PATADAS AL CIELO SOBRE FB", "category": "PP CADENA POSTERIOR"}, {"name": "PATADAS AL CIELO EN TRX", "category": "PP CADENA POSTERIOR"}, {"name": "PATADAS AL CIELO SOBRE MANC", "category": "PP CADENA POSTERIOR"}, {"name": "SERRUCHO BI PODAL EN PUAS", "category": "PP CADENA POSTERIOR"}, {"name": "SERRUCHO BI PODAL EN FB", "category": "PP CADENA POSTERIOR"}, {"name": "SERRUCHO BI PODAL SOBRE MANC", "category": "PP CADENA POSTERIOR"}, {"name": "SERRUCHO UNI PODAL EN PUAS", "category": "PP CADENA POSTERIOR"}, {"name": "SERRUCHO UNI PODAL EN FB", "category": "PP CADENA POSTERIOR"}, {"name": "SERRUCHO UNI PODAL SOBRE MANC", "category": "PP CADENA POSTERIOR"}, {"name": "PESO MUERTO A 1 PP ASISTIDO", "category": "PP CADENA POSTERIOR"}, {"name": "PESO MUERTO A 1 PP Y 1 BB CL o HL", "category": "PP CADENA POSTERIOR"}, {"name": "PESO MUERTO A 1 P Y 2 BB", "category": "PP CADENA POSTERIOR"}, {"name": "PESO MUERTO A 1 PP CON BARRA", "category": "PP CADENA POSTERIOR"}, {"name": "PERO MUERTO A 1 PP SOBRE INES", "category": "PP CADENA POSTERIOR"}, {"name": "PESO MUERTO A 1 PP + ELAS LAT", "category": "PP CADENA POSTERIOR"}, {"name": "PESO MUERTO A 1 PP EN BARRA DE PNTA CL", "category": "PP CADENA POSTERIOR"}, {"name": "PESO MUERTO A 2 BB CON MANC", "category": "PP CADENA POSTERIOR"}, {"name": "PESO MUERTO CON BARRA", "category": "PP CADENA POSTERIOR"}, {"name": "DESPEGUE CON BARRA DESDE PISO", "category": "PP CADENA POSTERIOR"}, {"name": "DESCENSO DE ISQUIOS A 2 PP", "category": "PP CADENA POSTERIOR"}, {"name": "DESCENSO DE ISQUIOS A 1 PP", "category": "PP CADENA POSTERIOR"}, {"name": "DESCENSO DE ISQUIOS FACILITADO", "category": "PP CADENA POSTERIOR"}, {"name": "DESCENSO DE ISQUIOS + CONCENTRICO", "category": "PP CADENA POSTERIOR"}, {"name": "BUENOS DIAS A 1 PP", "category": "PP CADENA POSTERIOR"}, {"name": "DETENTE INSTANTANEO CUERPO EN BNCO", "category": "PP CADENA POSTERIOR"}, {"name": "DETENTE INSTANTANEO PEGANDO EN FB", "category": "PP CADENA POSTERIOR"}, {"name": "DETENTE INSTANTANEO CUERPO EN FB", "category": "PP CADENA POSTERIOR"}, {"name": "DETENTE INSTANTANEO ASISTIDO A 2 PP", "category": "PP CADENA POSTERIOR"}, {"name": "DETENTE INSTANTANEO ASISTIDO A 1 PP", "category": "PP CADENA POSTERIOR"}, {"name": "DETENTE INSTANTANEO A 2 PP", "category": "PP CADENA POSTERIOR"}, {"name": "DETENTE INSTANTANEO A 1 PP", "category": "PP CADENA POSTERIOR"}, {"name": "ELONG. DINAM. C/TIRANTE MUSCULADOR", "category": "PP CADENA POSTERIOR"}, {"name": "PASAJE + ABEDUC DE VALLAS CON SALT.", "category": "PP CADENA POSTERIOR"}, {"name": "CURL DE ISQUIOS A 1 PP CON ELAS", "category": "PP CADENA POSTERIOR"}, {"name": "CURL DE ISQUIOS ISOM A 1 PP", "category": "PP CADENA POSTERIOR"}, {"name": "CULR DE ISQUIS ISOM CON ELAS", "category": "PP CADENA POSTERIOR"}, {"name": "TRACCION DE DISCO CON ISQUIOS", "category": "PP CADENA POSTERIOR"}, {"name": "CAMINATA ISQUIOS", "category": "PP CADENA POSTERIOR"}, {"name": "PESO MUERTO BULGARO", "category": "PP CADENA POSTERIOR"}, {"name": "PRESS ARNOLD A 1 BB", "category": "EMPUJE VERTICAL"}, {"name": "PRESS ARNOLD", "category": "EMPUJE VERTICAL"}, {"name": "PRESS ARNOLD INEST A 1 BB", "category": "EMPUJE VERTICAL"}, {"name": "PRESS ARNOLD INEST", "category": "EMPUJE VERTICAL"}, {"name": "PRESS ARNOLD EN SPLIT A 1 BB", "category": "EMPUJE VERTICAL"}, {"name": "PRESS ARNOLD EN SPLT A 1 BB INES", "category": "EMPUJE VERTICAL"}, {"name": "PRESS ARNOLD A 1 BB Y EL OTRO ISOM", "category": "EMPUJE VERTICAL"}, {"name": "PRES ARNOLD ISOM", "category": "EMPUJE VERTICAL"}, {"name": "PRESS ARNOLD ALTERNO", "category": "EMPUJE VERTICAL"}, {"name": "PRESS ARNOLD ALTERNO INESTABLE", "category": "EMPUJE VERTICAL"}, {"name": "PRESS ARNOLD + ELAS LAT EN MANC 1 BB", "category": "EMPUJE VERTICAL"}, {"name": "PRESS ARNOLD + ELAS LAT SOBRE INES", "category": "EMPUJE VERTICAL"}, {"name": "PRESS ARNOLD CON BARRA ROMANA", "category": "EMPUJE VERTICAL"}, {"name": "PRESS ARNOLD CON B. ROM. E INEST.", "category": "EMPUJE VERTICAL"}, {"name": "PRESS ARNOLD EN BARRA DE PNTA A 2 BB", "category": "EMPUJE VERTICAL"}, {"name": "PRESS ARNOLD EN BARRA DE PNTA A 1 BB", "category": "EMPUJE VERTICAL"}, {"name": "PRESS ARNOLD EN B. PNTA A 2 BB INEST", "category": "EMPUJE VERTICAL"}, {"name": "PRESS ARNOLD EN B. PNTA A 1 BB INEST.", "category": "EMPUJE VERTICAL"}, {"name": "BI + PRESS ARNOLD A 1 BB", "category": "EMPUJE VERTICAL"}, {"name": "BI + PRESS ARNOLD", "category": "EMPUJE VERTICAL"}, {"name": "BI + PRESS ARNOLD INEST A 1 BB", "category": "EMPUJE VERTICAL"}, {"name": "BI + PRESS ARNOLD INEST", "category": "EMPUJE VERTICAL"}, {"name": "BI + PRESS ARNOLD EN SPLIT A 1 BB", "category": "EMPUJE VERTICAL"}, {"name": "BI + PRESS ARNOLD EN SPLT A 1 BB INES", "category": "EMPUJE VERTICAL"}, {"name": "BI + PRESS ARNOLD ALTERNO", "category": "EMPUJE VERTICAL"}, {"name": "BI + PRESS ARNOLD ALTERNO INESTABLE", "category": "EMPUJE VERTICAL"}, {"name": "VUELOS LATERALES CON MANC", "category": "EMPUJE VERTICAL"}, {"name": "VUELOS FRONTALES CON MANC", "category": "EMPUJE VERTICAL"}, {"name": "VUELOS ALTERNOS CON MANC", "category": "EMPUJE VERTICAL"}, {"name": "VUELOS LATERALES CON ELAS", "category": "EMPUJE VERTICAL"}, {"name": "VUELOS FRONTALES CON ELAS", "category": "EMPUJE VERTICAL"}, {"name": "VUELOS ALTERNOS CON ELAS", "category": "EMPUJE VERTICAL"}, {"name": "VUELOS LATERALES CON ELAS A 1 BB", "category": "EMPUJE VERTICAL"}, {"name": "VUELOS LATERALES CON MANC A 1 BB", "category": "EMPUJE VERTICAL"}, {"name": "VUELO FRONTAL CON BARRA", "category": "EMPUJE VERTICAL"}, {"name": "RECHAZOS DE HOMBROS CON MANC", "category": "EMPUJE VERTICAL"}, {"name": "REMO DE PIE CON MANC", "category": "EMPUJE VERTICAL"}, {"name": "REMO DE PIE CON BARRA", "category": "EMPUJE VERTICAL"}, {"name": "REMO DE PIE CON B. o MANC INESTABLE", "category": "EMPUJE VERTICAL"}, {"name": "FZA ESTRICTA", "category": "EMPUJE VERTICAL"}, {"name": "FZA ESTRICA CON DISC COLGANDO", "category": "EMPUJE VERTICAL"}, {"name": "BI + VUELO LAT", "category": "EMPUJE VERTICAL"}, {"name": "BI + VUELO FRONT", "category": "EMPUJE VERTICAL"}, {"name": "PRESS + VUELO LAT", "category": "EMPUJE VERTICAL"}, {"name": "PRESS + VUELO FRONT", "category": "EMPUJE VERTICAL"}, {"name": "BI+PRESS + VUELO LAT", "category": "EMPUJE VERTICAL"}, {"name": "BI+PRESS + VUELO FRONT", "category": "EMPUJE VERTICAL"}, {"name": "FZA EN BANCO PLANO A 1 BB", "category": "EMPUJE HORIZONTAL"}, {"name": "FZA EN BANCO PLANO A 2 BB ALTERNO", "category": "EMPUJE HORIZONTAL"}, {"name": "FZA EN BANCO PLANO A 2 BB", "category": "EMPUJE HORIZONTAL"}, {"name": "FZA EN BANCO DECLINADO A 1 BB", "category": "EMPUJE HORIZONTAL"}, {"name": "FZA EN BANCO DECLINADO A 2 BB", "category": "EMPUJE HORIZONTAL"}, {"name": "FZA EN BANCO INCLINADO A 1 BB", "category": "EMPUJE HORIZONTAL"}, {"name": "FZA EN BANCO INCLINADO A 2 BB", "category": "EMPUJE HORIZONTAL"}, {"name": "FZA EN BANCO PLANO", "category": "EMPUJE HORIZONTAL"}, {"name": "FZA EN BANCO DECLINADO", "category": "EMPUJE HORIZONTAL"}, {"name": "FZA EN BANCO INCLINADO", "category": "EMPUJE HORIZONTAL"}, {"name": "FZA EN BANCO PLANO CON DISC. COLG.", "category": "EMPUJE HORIZONTAL"}, {"name": "FZA EN BANCO DECLINADO CON DISC. COLG.", "category": "EMPUJE HORIZONTAL"}, {"name": "FZA EN BANCO INCLINADO CON DISC. COLG.", "category": "EMPUJE HORIZONTAL"}, {"name": "FZA EN BANCO TOMA CERRADA", "category": "EMPUJE HORIZONTAL"}, {"name": "FLOOR PRESS A 1 BB", "category": "EMPUJE HORIZONTAL"}, {"name": "FLOOR PRESS A 2 BB", "category": "EMPUJE HORIZONTAL"}, {"name": "FLOOR PRESS CON BARRA", "category": "EMPUJE HORIZONTAL"}, {"name": "APERTURAS PLANO CON MANC", "category": "EMPUJE HORIZONTAL"}, {"name": "APERTURAS INCLINADO CON MANC", "category": "EMPUJE HORIZONTAL"}, {"name": "APERTURAS DECLINADO CON MANC", "category": "EMPUJE HORIZONTAL"}, {"name": "APERTURAS PLANO A 1 BB", "category": "EMPUJE HORIZONTAL"}, {"name": "APERTURAS INCLINADO A 1 BB", "category": "EMPUJE HORIZONTAL"}, {"name": "APERTURAS DECLINADO A 1 BB", "category": "EMPUJE HORIZONTAL"}, {"name": "PECK DECK CON ELAS", "category": "EMPUJE HORIZONTAL"}, {"name": "PECK DECK EN POLEA", "category": "EMPUJE HORIZONTAL"}, {"name": "FZA EN FB A 1 BB", "category": "EMPUJE HORIZONTAL"}, {"name": "FZA EN FB A 2 BB ALTERNO", "category": "EMPUJE HORIZONTAL"}, {"name": "FZA EN FB A 2 BB", "category": "EMPUJE HORIZONTAL"}, {"name": "EXTENSIONES DE BB", "category": "EMPUJE HORIZONTAL"}, {"name": "EXTENSIONES DE BB SOBRE MANC", "category": "EMPUJE HORIZONTAL"}, {"name": "EXTENSIONES DE BB A 1 BB INES", "category": "EMPUJE HORIZONTAL"}, {"name": "EXTENSIONES DE BB A INES", "category": "EMPUJE HORIZONTAL"}, {"name": "EXTENSIONES DE BB CON PP ELEVADOS", "category": "EMPUJE HORIZONTAL"}, {"name": "EXTENSIONES DE BB CON BB ELEVADOS", "category": "EMPUJE HORIZONTAL"}, {"name": "EXTENSIONES DE BB CON BB SOBRE FB", "category": "EMPUJE HORIZONTAL"}, {"name": "EXTENSIONES DE BB CON BB SOBRE TRX", "category": "EMPUJE HORIZONTAL"}, {"name": "EXTENSIONES DE BB CON PP SOBRE CAJON", "category": "EMPUJE HORIZONTAL"}, {"name": "EXTENSIONES DE BB CON PP SOBRE FB", "category": "EMPUJE HORIZONTAL"}, {"name": "EXTENSIONES DE BB CON PP SOBRE TRX", "category": "EMPUJE HORIZONTAL"}, {"name": "EXTENSIONES DE BB DOBLE INEST", "category": "EMPUJE HORIZONTAL"}, {"name": "EXTENSIONES + REMO CON MANC", "category": "EMPUJE HORIZONTAL"}, {"name": "EXT. + REMO CON MANC + APERTURA", "category": "EMPUJE HORIZONTAL"}, {"name": "PULL OVER A 2 BB Y 1 MANC", "category": "EMPUJE HORIZONTAL"}, {"name": "PULL OVER A 2 BB Y 2 MANC", "category": "EMPUJE HORIZONTAL"}, {"name": "PULL OVER + PRESS", "category": "EMPUJE HORIZONTAL"}, {"name": "PULL OVER CON BARRA CRUZADA", "category": "EMPUJE HORIZONTAL"}, {"name": "FZA EN BANCO 3 - 1 - 3", "category": "EMPUJE HORIZONTAL"}, {"name": "EXTENSIONES DE BB A 1 SOLO BB", "category": "EMPUJE HORIZONTAL"}, {"name": "EXTENSIONES DE BB A 1 SOLO BB - INES", "category": "EMPUJE HORIZONTAL"}, {"name": "FONDO DE TRICEP EN CAJON", "category": "EMPUJE HORIZONTAL"}, {"name": "FONDO DE TRICEP EN PARALELAS", "category": "EMPUJE HORIZONTAL"}, {"name": "APERTURAS EQUI EN FB", "category": "EMPUJE HORIZONTAL"}, {"name": "FZA EN BANCO + APERTURA", "category": "EMPUJE HORIZONTAL"}, {"name": "FZA EN BANCO + TRICEP FRANCES", "category": "EMPUJE HORIZONTAL"}, {"name": "APERTURA + TRICEP FRANCES", "category": "EMPUJE HORIZONTAL"}, {"name": "TRICEP CON ELASTICO", "category": "EMPUJE HORIZONTAL"}, {"name": "TRICEPS EN POLEA", "category": "EMPUJE HORIZONTAL"}, {"name": "TRICEP A 1BB EN POLEA O ELAST", "category": "EMPUJE HORIZONTAL"}, {"name": "TRICEP FRANCER", "category": "EMPUJE HORIZONTAL"}, {"name": "TRICEP CON BARRA", "category": "EMPUJE HORIZONTAL"}, {"name": "APERTURAS EN FB", "category": "EMPUJE HORIZONTAL"}, {"name": "TIRONES CON ELAST A 1 BB", "category": "TRACCION VERTICAL"}, {"name": "TIRONES EN POLEA A 1 BB", "category": "TRACCION VERTICAL"}, {"name": "TIRONES EN POLEA TOMA PALMAR", "category": "TRACCION VERTICAL"}, {"name": "TIRONES EN POLEA TOMA NEUTRA", "category": "TRACCION VERTICAL"}, {"name": "TIRONES EN POLEA TOMA NEUTRA ABIERTA", "category": "TRACCION VERTICAL"}, {"name": "TIRONES EN POLEA TOMA DORSAL", "category": "TRACCION VERTICAL"}, {"name": "TIRON EN POLEA CON SOGA A 1 BB", "category": "TRACCION VERTICAL"}, {"name": "TIRON EN POLEA CON SOGA A 2 BB", "category": "TRACCION VERTICAL"}, {"name": "DOMINADAS ACOSTADO", "category": "TRACCION VERTICAL"}, {"name": "DOMINADAS ASISTIDO CON ELAS", "category": "TRACCION VERTICAL"}, {"name": "DOMINADAS SALTO Y EXCENTRICA EN 3\" O 5\"", "category": "TRACCION VERTICAL"}, {"name": "DOMINADAS NEUTRA", "category": "TRACCION VERTICAL"}, {"name": "DOMINADAS PALMAR", "category": "TRACCION VERTICAL"}, {"name": "DOMINADAS", "category": "TRACCION VERTICAL"}, {"name": "DOMINADAS EN ANILLAS PALMAR", "category": "TRACCION VERTICAL"}, {"name": "DOMINADAS EN ANILLAS NEUTRA", "category": "TRACCION VERTICAL"}, {"name": "DOMINADAS EN ANILLAS", "category": "TRACCION VERTICAL"}, {"name": "DOM. EN ANILLAS PASANDO POR 3 POS", "category": "TRACCION VERTICAL"}, {"name": "DOMINADAS CON KIMONO", "category": "TRACCION VERTICAL"}, {"name": "BICEPS PARADO (B o M)", "category": "TRACCION VERTICAL"}, {"name": "BICEPS SENTADO INCLINADO", "category": "TRACCION VERTICAL"}, {"name": "BICEPS ACOSTADO BOCA ABAJO", "category": "TRACCION VERTICAL"}, {"name": "BICEPS EXCENTRICO", "category": "TRACCION VERTICAL"}, {"name": "DOMINADAS SENTADO", "category": "TRACCION VERTICAL"}, {"name": "REMO A 1 BB CON ELAS", "category": "TRACCION HORIZONTAL"}, {"name": "REMO A 1 BB EN POLEA", "category": "TRACCION HORIZONTAL"}, {"name": "REMO EN POLEA TOMA NEUTRA", "category": "TRACCION HORIZONTAL"}, {"name": "REMO EN POLEA TOMA NEUTRA ABIERTA", "category": "TRACCION HORIZONTAL"}, {"name": "REMO EN POLEA TOMA PALMAR", "category": "TRACCION HORIZONTAL"}, {"name": "REMO EN POLEA TOMA DORSAL", "category": "TRACCION HORIZONTAL"}, {"name": "REMO EN POLEA CON SOGA A 1 BB", "category": "TRACCION HORIZONTAL"}, {"name": "REMO EN POLEA CON SOGA A 2 BB", "category": "TRACCION HORIZONTAL"}, {"name": "PULL FACE", "category": "TRACCION HORIZONTAL"}, {"name": "REMO EN POLEA DORSAL A 2 o 3 POS", "category": "TRACCION HORIZONTAL"}, {"name": "REMO ACOSTADO CON MANC A 1 BB", "category": "TRACCION HORIZONTAL"}, {"name": "REMO ACOSTADO CON MANC A 2 BB", "category": "TRACCION HORIZONTAL"}, {"name": "REMO ACOSTADO CON MANC A 2 BB ALT.", "category": "TRACCION HORIZONTAL"}, {"name": "REMO ACOSTADO CON BARRA", "category": "TRACCION HORIZONTAL"}, {"name": "REMO ACOSTADO CON B. TOMA PALMAR", "category": "TRACCION HORIZONTAL"}, {"name": "REMO ACOSTADO CON BARRA ROMANA", "category": "TRACCION HORIZONTAL"}, {"name": "REMO SERRUCHO", "category": "TRACCION HORIZONTAL"}, {"name": "REMO SUSPENDIDO CON MANC A 1 BB", "category": "TRACCION HORIZONTAL"}, {"name": "REMO SUSPENDIDO CON MANC A 2 BB", "category": "TRACCION HORIZONTAL"}, {"name": "REMO SUSPENDIDO CON MANC A 2 BB ALT.", "category": "TRACCION HORIZONTAL"}, {"name": "REMO SUSPENDIDO CON BARRA", "category": "TRACCION HORIZONTAL"}, {"name": "REMO SUSPENDIDO CON B. TOMA PALMAR", "category": "TRACCION HORIZONTAL"}, {"name": "REMO PARADO CON BARRA", "category": "TRACCION HORIZONTAL"}, {"name": "REMO PARADO CON BARRA PALMAR", "category": "TRACCION HORIZONTAL"}, {"name": "REMO PARADO CON BARRA ROMMANA", "category": "TRACCION HORIZONTAL"}, {"name": "REMO EN TRX TOMA NEUTRA", "category": "TRACCION HORIZONTAL"}, {"name": "REMO EN TRX TOMA DORSAL", "category": "TRACCION HORIZONTAL"}, {"name": "REMO EN TRX TOMA PALMAR", "category": "TRACCION HORIZONTAL"}, {"name": "REMO EN TRX A 2 O 3 POS", "category": "TRACCION HORIZONTAL"}, {"name": "REMO EN TRX A 1 BB", "category": "TRACCION HORIZONTAL"}, {"name": "REMO EN TRX A 1 PP APOYADO", "category": "TRACCION HORIZONTAL"}, {"name": "REMO EN TRX A 1 PP AP Y 1 BB", "category": "TRACCION HORIZONTAL"}, {"name": "REMO SUSP. CON SUELTA Y TOMA (B o M)", "category": "TRACCION HORIZONTAL"}, {"name": "REMO CON SOGA EN B. DE PUNTA", "category": "TRACCION HORIZONTAL"}, {"name": "BICHO MUERTO UNIBRAQUIAL", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "BICHO MUERTO UNIPODAL", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "BICHO MUERTO CADENA CRUZADA", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "BICHO MUERTO HOMOLATERAL", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "BICHO MUERTO CON PESO CL o HL", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "BICHO MUERTO CON ELASTICO CL o HL", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "BICHO MUERTO 2 BB 2 PP", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "CURL UP", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "CURL UP a 1 PP", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "PALL OF PRESS CON ELAS A 2 BB", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "PALL OF PRESS + CIRCULOS 2BB", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "PALL OF PRESS + PASO LATERA 2BB", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "PALL OF PRESS + VISAGRA DE CADERA 2 BB", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "PALL OF PRESS CON ELAS A 1 BB", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "PALL OF PRESS + CIRCULOS 1BB", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "PALL OF PRESS + PASO LATERA 1BB", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "PALL OF PRESS + BISAGRA DE CADERA 1 BB", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "PALL OF PRESS CON ELAS A 2 BB INESTABLE", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "PALL OF PRESS + CIRCULOS 2BB INESTABLE", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "PALL OF P.+ GIRO DE TRONCO 2BB INES.", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "PALL OF P.+ BISAGRA DE CADERA 2 BB INES.", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "PALL OF PRESS A 2 BB Y 1 PP", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "PALL OF PRESS + DISCO PERTURBADOR", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "PALL OF PRESS + ROTACION", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "ABDOMINALES CLASICOS", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "ABDOMINALES RESISTIDOS CON ELAS", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "ABDOMINALES RES. ACEL. CON ELAS", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "ABDOMINALES RES. ACEL. CON PESO", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "ABDOMINALES CON PESO", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "ABDOMINALES CON PESO Y PP TRABADOS", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "ABDOMINALES + TWIST SOVIETICO", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "ABDOMINALES + ADUCTORES", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "ABDOMINALES + ABEDUCTORES", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "RUEDITA ABDOMINAL", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "ABDOMINALES DE PP A 45 º", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "ABDOMINALES A 200 º", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "ABDOMINALES DE PP COLG.\"ROD. AL PECHO\"", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "ABDOMINALES DE PP COLG.\"FLEX. A 90º PP\"", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "ABDOMINALES DE PP COLG. \"PATADA CRAWL\"", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "ABDOMINALES DE PP COLGADO \"RELOJITO\"", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "OBLICUOS EN MAQUINA DE HEL", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "OBLICUOS CON MANC", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "TWIST SOVIETICO", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "TWIST DE PP (90º O 180º)", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "TWIST EN FB", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "ABDOMINALES EN FB Y PP TRABADOS", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "RUEDITA ABDOMINAL DESDE PARADO", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "PLANCHA FRONTAL A 2 BB (EST o INEST)", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "PLANCHA FRONTAL 1 BB (EST o INEST)", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "PLANCHA FRONT. EN FB + REVOLVER OLLA", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "ROTACIONES DE TRONCO (EST o INEST)", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "GIROS CON DISCO PARADO", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "GIROS CON BARRA DE PNTA", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "ABDOMINALES BISAGRA CADENA CRUZADA", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "ABDOMINALES BISAGRA", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "ABDOMINALES HAMACA ISOM", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "ABDOMINALES HAMACA ISOM CON PESO", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "ABDOMINALES IEC", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "ABDOMINALES IEC + ADUCTORES", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "ABDOMINALES IEC + ISQUIOS", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "ROMPE PUBIS EN FB", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "PLANCHA FRONTAL LLEVO Y TRAIGO MANC", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "PLANCHA FRONTAL \"ME PONGO LA MOCHILA\"", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "PLANCHA FRONTAL", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "PLANCHA FRONTAL A 1 BB", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "PLANCHA FRONTAL BB EN INES", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "PLANCHA FRONTAL PP EN INES", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "PLANCHA FRONTAL DOBLE INES", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "PLANCHA FRONTAL A 1 PP", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "PLANCHA FRONTAL + ABEDUC DE PP", "category": "ZONA MEDIA CADENA ANTERIOR"}, {"name": "PLANCHA BOCA ARRIBA", "category": "ZONA MEDIA CADENA POSTERIOR"}, {"name": "PLANCHA BOCA ARRIBA INESTABLE PP", "category": "ZONA MEDIA CADENA POSTERIOR"}, {"name": "PLANCHA BOCA ARRIBA INEST. ESCAPULAS", "category": "ZONA MEDIA CADENA POSTERIOR"}, {"name": "PLANCHA BOCA ARRIBA DOBLE INESTABLE", "category": "ZONA MEDIA CADENA POSTERIOR"}, {"name": "PLANCHA BOCA ARRIBA 1PP", "category": "ZONA MEDIA CADENA POSTERIOR"}, {"name": "PLANCHA BOCA ARRIBA INESTABLE PP 1 PP", "category": "ZONA MEDIA CADENA POSTERIOR"}, {"name": "PLANCHA BOCA ARRI. INEST. ESCAP. 1 PP", "category": "ZONA MEDIA CADENA POSTERIOR"}, {"name": "PLANCHA BOCA ARRIBA DOBLE INEST. 1 PP", "category": "ZONA MEDIA CADENA POSTERIOR"}, {"name": "LUMBARES ALTERNOS \"CAPRICHITO\"", "category": "ZONA MEDIA CADENA POSTERIOR"}, {"name": "HEL DE PP ISOM 45º", "category": "ZONA MEDIA CADENA POSTERIOR"}, {"name": "HEL DE PP", "category": "ZONA MEDIA CADENA POSTERIOR"}, {"name": "HEL DE PP A 1 PP", "category": "ZONA MEDIA CADENA POSTERIOR"}, {"name": "HEL DE PP A 1 PP + ABEDUC 3\"", "category": "ZONA MEDIA CADENA POSTERIOR"}, {"name": "HEL DE PP CEDIENTE EN 3\" (2 PP)", "category": "ZONA MEDIA CADENA POSTERIOR"}, {"name": "HEL DE PP CEDIENTE EN 3\" (1 PP)", "category": "ZONA MEDIA CADENA POSTERIOR"}, {"name": "HEL", "category": "ZONA MEDIA CADENA POSTERIOR"}, {"name": "HEL A 1 PP", "category": "ZONA MEDIA CADENA POSTERIOR"}, {"name": "HEL ISOM", "category": "ZONA MEDIA CADENA POSTERIOR"}, {"name": "HEL ISOM A 1 PP", "category": "ZONA MEDIA CADENA POSTERIOR"}, {"name": "HEL CON BARRA", "category": "ZONA MEDIA CADENA POSTERIOR"}, {"name": "HEL DE ARRANQUE CON ELAST", "category": "ZONA MEDIA CADENA POSTERIOR"}, {"name": "PLANCHA BOCA ARRIBA CON PP EN FB", "category": "ZONA MEDIA CADENA POSTERIOR"}, {"name": "PLANCHA BOCA ARRIBA CON ESCAP. EN FB", "category": "ZONA MEDIA CADENA POSTERIOR"}, {"name": "BUENOS DIAS", "category": "ZONA MEDIA CADENA POSTERIOR"}, {"name": "BUENOS DIAS SENTADO", "category": "ZONA MEDIA CADENA POSTERIOR"}, {"name": "BUENOS DIAS PANDA", "category": "ZONA MEDIA CADENA POSTERIOR"}, {"name": "LUMBARES A-W", "category": "ZONA MEDIA CADENA POSTERIOR"}, {"name": "PALOMAS", "category": "CINTURA ESCAPULAR"}, {"name": "PALOMAS A 1 BB", "category": "CINTURA ESCAPULAR"}, {"name": "PALOMAS CON ELAS", "category": "CINTURA ESCAPULAR"}, {"name": "PALOMAS CON ELAS A 1 BB", "category": "CINTURA ESCAPULAR"}, {"name": "PALOMAS CON ELAS e INEST", "category": "CINTURA ESCAPULAR"}, {"name": "PALOMAS ISOM 20\"", "category": "CINTURA ESCAPULAR"}, {"name": "PALOMAS A 2 o 3 POS", "category": "CINTURA ESCAPULAR"}, {"name": "PALOMAS + REMO", "category": "CINTURA ESCAPULAR"}, {"name": "ISOMETRICO DE ESCAPULAS", "category": "CINTURA ESCAPULAR"}, {"name": "PALOMAS SUSPENDIDO", "category": "CINTURA ESCAPULAR"}, {"name": "PALOMAS SUSPENDIDO A 1 BB", "category": "CINTURA ESCAPULAR"}, {"name": "PALOMAS SUSPENDIDO A 2 o 3 POS", "category": "CINTURA ESCAPULAR"}, {"name": "PALOMAS SUSPENDIDO + REMO", "category": "CINTURA ESCAPULAR"}, {"name": "PALOMAS SUSPENDIDO + VUELO FRONT", "category": "CINTURA ESCAPULAR"}, {"name": "PALOMAS SUSPENDIDO A 1 PP 2 BB", "category": "CINTURA ESCAPULAR"}, {"name": "PALOMAS SUSPENDIDO A 1 PP 1 BB", "category": "CINTURA ESCAPULAR"}, {"name": "RECHAZOS DE ESCAPULA COLGADO", "category": "CINTURA ESCAPULAR"}, {"name": "EXTENSIONES POR DETRÁS CON BARRA", "category": "CINTURA ESCAPULAR"}, {"name": "PALOMAS EN TRX", "category": "CINTURA ESCAPULAR"}, {"name": "PALOMAS EN TRX ISOM", "category": "CINTURA ESCAPULAR"}, {"name": "PALOMAS SUSPENDIDO A 1 PP", "category": "CINTURA ESCAPULAR"}, {"name": "HELADERO", "category": "CINTURA ESCAPULAR"}, {"name": "CLAVAS", "category": "CINTURA ESCAPULAR"}, {"name": "T.G.U", "category": "CINTURA ESCAPULAR"}, {"name": "ISOM DE ESCAPULAS + ROTACION EXT EN FB", "category": "CINTURA ESCAPULAR"}, {"name": "SENTADO: TIRON + ROT + EMPUJE CON ELAS", "category": "CINTURA ESCAPULAR"}, {"name": "MEDIO ARRANQUE", "category": "CINTURA ESCAPULAR"}, {"name": "MEDIO ARRANQUE ACOSTADO", "category": "CINTURA ESCAPULAR"}, {"name": "ARRANQUE SENTADO", "category": "CINTURA ESCAPULAR"}, {"name": "PALOMAS CON CUELLO APOYADO", "category": "CINTURA ESCAPULAR"}, {"name": "RELOJITO PARADO CON ELAS A 2 BB", "category": "CINTURA ESCAPULAR"}, {"name": "RELOJITO ACOSTADO CON MANC A 2 BB", "category": "CINTURA ESCAPULAR"}, {"name": "RELOJITO SUSPENDIDO CON MANC A 2 BB", "category": "CINTURA ESCAPULAR"}, {"name": "PALOMAS CON ELAS A-W", "category": "CINTURA ESCAPULAR"}, {"name": "EQUILIBRIO A 1 PP SOBRE INESTABLES", "category": "AUX DE PP"}, {"name": "EQUILIBRIO A 2 PP SOBRE INESTABLES", "category": "AUX DE PP"}, {"name": "EQUILIBRIO A 1 PP + ACTIVIDAD", "category": "AUX DE PP"}, {"name": "PIRAMIDAL CON ELASTICO", "category": "AUX DE PP"}, {"name": "PIRAMIDAL CON ELASTICO INESTABLE", "category": "AUX DE PP"}, {"name": "PIRAMIDAL CON ELAST EXCENTRICO EN 3\"", "category": "AUX DE PP"}, {"name": "PIRAMIDAL EQUI", "category": "AUX DE PP"}, {"name": "PIRAMIDAL DE PIE CON ELASTICO", "category": "AUX DE PP"}, {"name": "ABDUC. DE PP CON ELAS. A 1 PP PIE EN FLEX.", "category": "AUX DE PP"}, {"name": "ABEDUC. PP CON ELAS A 1 PP ACOST. EN FLEX.", "category": "AUX DE PP"}, {"name": "CAMINATA DEL CANGREJO CON BANDA ADUC", "category": "AUX DE PP"}, {"name": "ABEDUCCION DE PP PARADO", "category": "AUX DE PP"}, {"name": "ADUCTORES CON ELASTICO", "category": "AUX DE PP"}, {"name": "TRAPITO DE PIE", "category": "AUX DE PP"}, {"name": "TRAPITO SENTADO", "category": "AUX DE PP"}, {"name": "TIBIAL CON ELASTICO DE PIE", "category": "AUX DE PP"}, {"name": "TIBIAL CON BARRA DINAMICO", "category": "AUX DE PP"}, {"name": "GEMELOS CON MANC SENTADO", "category": "AUX DE PP"}, {"name": "GEMELOS PARADO CON BARRA", "category": "AUX DE PP"}, {"name": "PATADAS DE BURRO PARA ISQ. CON ELAS", "category": "AUX DE PP"}, {"name": "PATADAS DE BURRO PARA ISQ. CON POL.", "category": "AUX DE PP"}, {"name": "CAMINATA DEL CANGREJO 8x8", "category": "AUX DE PP"}, {"name": "DESLIZ. DE PP A 2 o 3 POS+BANDA ADUC.", "category": "AUX DE PP"}, {"name": "SENTADILLA LATERA DESLIZADA", "category": "AUX DE PP"}, {"name": "PULSEADAS AL REVES CON ELAS", "category": "AUX DE MOVILIDAD"}, {"name": "PULSEADAS AL REVES CON MANC", "category": "AUX DE MOVILIDAD"}, {"name": "CAMINATA DEL GRANJERO UNI BRAQUIAL", "category": "AUX DE MOVILIDAD"}, {"name": "CAMINATA DEL GRANJERO + PRESS ISOM", "category": "AUX DE MOVILIDAD"}, {"name": "CAMINATA DEL GRANJ. + B. CON PESO LAT.", "category": "AUX DE MOVILIDAD"}, {"name": "CAMINATA DEL GRANJ. + B. Y DISC COLG.", "category": "AUX DE MOVILIDAD"}, {"name": "GATO BUENO - GATO MALO", "category": "AUX DE MOVILIDAD"}, {"name": "ROTACIONES DE TRONCO EN CUADRIPEDIA", "category": "AUX DE MOVILIDAD"}, {"name": "MOVILIDAD DE CADERA EN CUADRIPEDIA", "category": "AUX DE MOVILIDAD"}, {"name": "SENTADILA LATERAL + FZA IPSILAT", "category": "AUX DE MOVILIDAD"}, {"name": "COORD EN ESCALERITA", "category": "PLIOMETRICOS"}, {"name": "COORD EN CUADRILATERO", "category": "PLIOMETRICOS"}, {"name": "TECNICA DE CARRERA", "category": "PLIOMETRICOS"}, {"name": "TECNICA DE CARRERA CON BANDA", "category": "PLIOMETRICOS"}, {"name": "TECNICA DE CARRERA CONTRA LA PARED", "category": "PLIOMETRICOS"}, {"name": "CORRER CON ELAST DE RESISTENCIA", "category": "PLIOMETRICOS"}, {"name": "SALTOS A 2 PP EN PISO", "category": "PLIOMETRICOS"}, {"name": "SALTOS A 2 PP EN ESC. o CUADRILAT.", "category": "PLIOMETRICOS"}, {"name": "SALTOS EN ESTOCADA", "category": "PLIOMETRICOS"}, {"name": "SALTOS EN CORRALITO 2 PP", "category": "PLIOMETRICOS"}, {"name": "SALTOS EN CORRALITO 2 PP HQ", "category": "PLIOMETRICOS"}, {"name": "DJ A 2 PP", "category": "PLIOMETRICOS"}, {"name": "SALTOS A 1 PP EN PISO", "category": "PLIOMETRICOS"}, {"name": "SALTOS A 1 PP EN ESC. o CUAD.", "category": "PLIOMETRICOS"}, {"name": "SALTOS EN CORRALITO 2 PP Y LAT 1 PP", "category": "PLIOMETRICOS"}, {"name": "SALTOS EN CORRALITO 1 PP", "category": "PLIOMETRICOS"}, {"name": "SALTOS EN CORRALITO 1 PP HQ", "category": "PLIOMETRICOS"}, {"name": "DJ A 1 PP", "category": "PLIOMETRICOS"}, {"name": "SALTOS RANA LATERAL", "category": "PLIOMETRICOS"}, {"name": "SALTOS AL CAJON", "category": "PLIOMETRICOS"}, {"name": "SALTOS CON PESO", "category": "PLIOMETRICOS"}, {"name": "SALTO VERTICAL CON ELAS. RESISTENCIA", "category": "PLIOMETRICOS"}, {"name": "ESC. CON SALT. Y COORD PARA MONTAÑA", "category": "PLIOMETRICOS"}, {"name": "BURPEES", "category": "PLIOMETRICOS"}];
 const libraryAll = [{"name": "Quad Setting Isometric", "category": "Rodilla", "source": "Prokinesis"}, {"name": "Straight Leg Raise", "category": "Rodilla", "source": "Prokinesis"}, {"name": "Terminal Knee Extension", "category": "Rodilla", "source": "Prokinesis"}, {"name": "Heel Slides", "category": "Rodilla", "source": "Prokinesis"}, {"name": "Plancha alta con transferencia de mancuerna", "category": "Core", "source": "Prokinesis"}, {"name": "Rotación externa de hombro con banda", "category": "Hombro", "source": "Prokinesis"}, {"name": "Retracción escapular con banda en codos", "category": "Escápula", "source": "Prokinesis"}, {"name": "Bisagra de cadera con estiramiento posterior", "category": "Cadena posterior", "source": "Prokinesis"}, {"name": "Sentadilla con barra", "category": "Piernas", "source": "Prokinesis"}, {"name": "Peso muerto con barra", "category": "Cadena posterior", "source": "Prokinesis"}, {"name": "VITALIZACION", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "VITALIZACION A 1 PP INES", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "VITALIZACION DOBLE INESTABLE", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "VITALIZACION DEL CENTRO CRUZ ARRIBA", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "VITALIZACION CRUZ DE ABAJO AL CENTRO", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "VITALIZACION + ELAS LAT", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "VITALIZACION A 1 BB", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "VITALIZACION A 1 BB Y 1 PP INES", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "VITALIZACION A 1 BB DOBLE INESTABLE", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "VITALIZACION A 1 BB + ELAST LAT", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "MEDIA VITALIZACION", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "MEDIA VITALIZACION A 1 PP INES", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "MEDIA VITALIZACION DOBLE INES", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "MEDIA VITALIZACION A 1 BB", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "MEDIA VITALIZACION A 1 BB Y 1 PP INES", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "MEDIA VITALIZACION A 1 BB Y DOBLE INES", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "MEDIA VITALIZACION + ELAS LATERAL", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMPUJE DE FZA CON BARRA DE PNTA 2 BB", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMPUJE DE FZA CON BARRA DE PNTA 1 BB", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMPUJE DE FZA CON B.PNTA 2 BB + 1PP IN", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMPUJE DE FZA CON B.PNTA 2 BB + 2 INES", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMPUJE DE FZA CON B.PNTA 1 BB + 1PP IN", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMPUJE DE FZA CON B.PNTA 1 BB + 2 INES", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMP.DE FZA CON B.PNTA 2 BB + ELAS ADUC", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMP. DE FZA CON B. PNTA 1 BB + EL ADUC", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMP. DE FZA EN SPLIT CON B. PNTA A 2 BB", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMP. DE FZA EN SPLIT CON B. PNTA A 1 BB", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMPUJE DE FZA A 1 BB", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMPUJE DE FZA A 1 BB Y 1 PP INES", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMPUJE DE FZA A 1 BB DOBLE INESTABLE", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMPUJE DE FZA A 2 BB CON MANC", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMPUJE DE FZA A 2 BB CON 1 PP INES", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMPUJE DE FZA A 2 BB CON DOBLE INES", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMPUJE DE FZA CON BARRA", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMP. DE FZA CON B. Y DISCOS COLGANDO", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMPUJE DE FZA A 1 BB + ELAS LAT", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMPUJE DE FZA A 1 BB + ELAS FRONT", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMPUJE DE FZA A 2 BB + ELAS LAT", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMPUJE DE FZA A 2 BB + ELAS FRONT", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMP. DE FZA A 1 BB 1PP INES + ELAS FRONT", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMP. DE FZA A 2 BB 1PP INES + ELAS FRONT", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMPUJE DE FZA A 1 BB + ELAS ADUC", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMPUJE DE FZA A 2 BB + ELAS ADUC", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMPUJE DE FZA EN SPLIT A 1 BB CON MANC", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMPUJE DE FZA EN SPLIT A 2 BB CON MANC", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMPUJE DE FZA EN SENT BULG A 1 BB", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "EMPUJE DE FZA EN SENT BULG A 2 BB", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "FZA CON IMPULSO A 1 BB CON MANC", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "FZA CON IMPULSO A 2 BB CON MANC", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "FZA CON IMPULSO CON BARRA", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "FZA CON IMP. CON B. Y DISC COLGANDO", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "FZA CON IMPULSO A 1 BB + ELAS LAT", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "FZA CON IMPULSO A 1 BB + ELAS FRONT", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "FZA CON IMPULSO A 2 BB + ELAS LAT", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "FZA CON IMPULSO A 2 BB + ELAS FRONT", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "FZA CON IMPULSO A 1 BB + ELAS ADUC", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "FZA CON IMPULSO A 2 BB + ELAS ADUC", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "FZA CON IMPULSO CON B. + ELAS ADUC", "category": "ACTIVADORES NO OLIMPICOS", "source": "CES757"}, {"name": "2DO TIEMPO A 1 BB CON BARRA DE PNTA", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "2DO TIEMPO A 2 BB CON BARRA DE PNTA", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "2DO TIEMPO A 1BB CON MANC", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "2DO TIEMPO A 2BB CON MANC", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "2DO TIEMPO CON BARRA POR DETRÁS", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "2DO TIEMPO A 1 PP Y 1 BB HL.", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "2DO TIEMPO A 1 PP Y 1 BB CL.", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "2DO TIEMPO A 1 PP Y 2 BB MANC", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "2DO TIEMPO CON BARRA POR DELANTE", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "2 TIEMPO B. PNTA (CON TIJERA)", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "2 TIEMPO X DETRÁS (CON TIJERA)", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "2 TIEMPO X DELANTE (CON TIJERA)", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "ARRANQUE DE FZA A 1 BB", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "ARRANQUE DE FZA A 1 BB Y 1 PP INES", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "ARRANQUE DE POT A 1 BB", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "ARR DE FZA DE INGLE", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "ARR DE FZA DE MEDIO MUSLO", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "ARR DE FZA COLGADO", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "ARR DE POTENCIA DE INGLE", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "ARR DE POTENCIA DE MEDIO MUSLO", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "ARR DE POTENCIA COLGADO", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "ARR DE POT. DE SOPORTE MEDIO MUSLO", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "ARR DE POTENCIA DE SOPORTE COLGADO", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "ARR DE POTENCIA DE SOPORTE B.R.", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "ARR FRANCES", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "ARR ALTERNO 1 PP/1 BB", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "ARRANQUE ALTO DE VELOCIDAD", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "METIDAS DE ARRANQUE CON INSTR. DE GUE", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "METIDAS DE ARRANQUE", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "METIDAS DE ARRANQUE A 2 O 3 POSICIONES", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "CARG DE POT A 1 PP CON BARRA", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "CARG DE POT A 1 PP + ELAS LAT. EN ROD.", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "CARG DE POT A 1 PP + ELAS FRONT. EN ROD.", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "CARG DE FZA DE MEDIO MUSLO", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "CARG DE FZA DE COLGADO", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "CARG DE POTENCIA DE MEDIO MUSLO", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "CARG DE POTENCIA COLGADO", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "CARG DE POT. DE SOPORTE MEDIO MUSLO", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "CARG DE POT. DE SOPORTE COLGDADO", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "CARG DE POT. DE SOPORTE B.R.", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "CARG DE POT. COLGADO BAJO RODILLA", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "CARG DE POT DE 1/2 MUSLO A LA FRANCESA", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "CARG DE POT COLG A LA FRANCESA", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "ENVION A UN PIE CON MANC", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "SENTADILLA DE ARRANQUE", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "SENTADILLA DE ARRANQUE CON MANC", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "SENTADILLA DE ARRANQUE A 1 BB", "category": "ACTIVADORES DLP", "source": "CES757"}, {"name": "1ER TIRON DE ARR", "category": "PESAS", "source": "CES757"}, {"name": "1ER TIRON DE ENV", "category": "PESAS", "source": "CES757"}, {"name": "TIRON DE ARR", "category": "PESAS", "source": "CES757"}, {"name": "TIRON DE ENV", "category": "PESAS", "source": "CES757"}, {"name": "TRANSICION DE TIRON ARRANQUE", "category": "PESAS", "source": "CES757"}, {"name": "TRANSICION DE TIRON CARGADA", "category": "PESAS", "source": "CES757"}, {"name": "2DO TIRON DE ARR", "category": "PESAS", "source": "CES757"}, {"name": "2DO TIRON DE ENV", "category": "PESAS", "source": "CES757"}, {"name": "ARRANQUE DE POT", "category": "PESAS", "source": "CES757"}, {"name": "ARRANQUE CLASICO", "category": "PESAS", "source": "CES757"}, {"name": "ARRANQUE COLGADO", "category": "PESAS", "source": "CES757"}, {"name": "CARGADAS DE POT", "category": "PESAS", "source": "CES757"}, {"name": "CARGADAS", "category": "PESAS", "source": "CES757"}, {"name": "CARGADA DE POT + FZA CON IMPULSO", "category": "PESAS", "source": "CES757"}, {"name": "CARGADA DE POT + 2DO TIEMPO", "category": "PESAS", "source": "CES757"}, {"name": "CARGADAS + FZA CON IMPULSO", "category": "PESAS", "source": "CES757"}, {"name": "CARG DE POT COLGADO + FZA CON IMP.", "category": "PESAS", "source": "CES757"}, {"name": "CARG DE POT COLGADO + 2DO TIEMPO", "category": "PESAS", "source": "CES757"}, {"name": "ENVION DE POT", "category": "PESAS", "source": "CES757"}, {"name": "ENVION CLASICO", "category": "PESAS", "source": "CES757"}, {"name": "REMO CHINO", "category": "PESAS", "source": "CES757"}, {"name": "ARRANQUE DE INGLE", "category": "PESAS", "source": "CES757"}, {"name": "CARGADA DE MEDIO MUSLO", "category": "PESAS", "source": "CES757"}, {"name": "ENVION DE MEDIO MUSLO", "category": "PESAS", "source": "CES757"}, {"name": "SENTADILLAS BULGARAS CON MANC", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLAS BULGARAS A 1 MANC CL.", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLAS BULGARAS CON BARRA", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLAS BULG. CON DISC COLGANDO", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLAS BULGARAS EN TRX Y MANC", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLAS BULGARAS CON PP INES", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLAS BULGARAS DE ARR CON MANC", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLAS BULGARAS DE ARR PALITO", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLAS BULG. DE ARR CON BARRA", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLAS BULG. DE ARR CON ELAST", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLAS BULGARAS COPA", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SUBIDAS AL BANCO CON MANC", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SUBIDAS AL BANCO CON BARRA", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SUBIDAS AL BANCO A 1 BB HL.", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SUBIDAS AL BANCO A 1 BB CL.", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SUBIDAS AL BANCO + ELAS FROT", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SUBIDAS AL BANCO + ELAS LAT", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLA A 1 PP CON APOYO", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLA A 1 PP SIN APOYO", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLA A 1 PP SIN APOYO + ELAS", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SPLITS CON MANC", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SPLITS CON MANC 1 BB CL.", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SPLITS CON BARRA", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SPLITS CON DISC COLGANDO", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SPLITS HIPER CON MANC", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SPLITS HIPER CON BARRA", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SPLITS COPA", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "ESTOCADAS HACIA ATRÁS CON MANC", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "ESTOCADAS HACIA ATRÁS COPA", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "DESPEGUE SUMO", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "DESPEGUE SUMO HIPER", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "DESPEGUE SUMO DESDE PISO CON BARRA", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "DESPEGUE SUMO A 1 PP INES", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "DESPEGUE SUMO DOBLE INES", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "DESPEGUE SUMO CON BARRA DE PNTA", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "DESPEGUE ROMANO", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "DESPEGUE ROMANO HIPER", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "1/4 DE DESPEGUE ROMANO", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "DESPEGUE ROMANO A 1 PP INES", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "DESPEGUE ROMANO DESDE PISO", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "GRUYA", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "GRUYA INESTABLE", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "GRUYA + SALTO", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "GRUYA + ELAS LAT", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "PISTOLAS A 2 PP", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "PISTOLAS A 1 PP", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "PISTOLAS A 1 PP + ELAS LAT", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "PISTOLAS A 1 PP + ELAS FRONT", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLAS ADEL CON BB EXTENDIDOS", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLAS ATRÁS", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLAS ADELANTE", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENT. (DEL. O DET.) CON DISC COLGANDO", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLA CON BARRA DE PNTA", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLAS LATERALES", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLA COPA", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLA COPA A 1 PP INES", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLA COPA DOBLE INES", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLA CAJON X DETRÁS", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLA CAJON X DELANTE", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLA CAJON COPA", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLA SISSY", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLA A 1 PP CON TRX", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLA EMPUJANDO FB", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLA EMPUJANDO FB A 1 PP", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "ISOMETRICO DE CUADRICEP 45\"+ 45\"", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "CUADRICERA", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "CUADRICERA + ISOM 15\" + 15\"", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "VASTO INTERNO CON ELAS", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "VASTO EXTERNO CON ELAS", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLA ATRÁS 3:1: 3", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "SENTADILLA ADELANTE 3:1:3", "category": "PP CADENA ANTERIOR", "source": "CES757"}, {"name": "ELEV DE CAD A 2 PP", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "ELEV DE CAD A 2 PP INES", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "ELEV DE CAD A 2 PP + ELAS ADUC", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "ELEV DE CAD A 2 PP INES + ELAS ADUC", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "ELEV DE CAD A 2 PP SOBRE FB", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "ELEV DE CAD A 2 PP SOBRE FB + ELAS ADUC", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "ELEV DE CAD 2 PP ISOM 20\"", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "ELEV DE CAD A 2 PP SOBRE MANC", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "ELEV DE CAD A 2 PP CON BARRA", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "ELEV DE CAD A 2 PP EN TRX", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "ELEV DE CAD A 1 PP", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "ELEV DE CAD A 1 PP INES", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "ELEV DE CAD A 1 PP + ELAS ADUC", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "ELEV DE CAD A 1 PP INES + ELAS ADUC", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "ELEV DE CAD A 1 PP SOBRE FB", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "ELEV DE CAD A 1 PP SOBRE FB + ELAS ADUC", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "ELEV DE CAD 1 PP ISOM 20\"", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "ELEV DE CAD A 1 PP SOBRE MANC", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "ELEV DE CAD A 1 PP CON BARRA", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "ELEV DE CAD A 1 PP EN TRX", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "ELEV DE CAD + MB EN ADUC", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "ELEV DE CAD + FB EN ADUC", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "PATADAS AL CIELO", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "PATADAS AL CIELO SOBRE INES", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "PATADAS AL CIELO CON ELAS", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "PATADAS AL CIELO SOBRE FB", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "PATADAS AL CIELO EN TRX", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "PATADAS AL CIELO SOBRE MANC", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "SERRUCHO BI PODAL EN PUAS", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "SERRUCHO BI PODAL EN FB", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "SERRUCHO BI PODAL SOBRE MANC", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "SERRUCHO UNI PODAL EN PUAS", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "SERRUCHO UNI PODAL EN FB", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "SERRUCHO UNI PODAL SOBRE MANC", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "PESO MUERTO A 1 PP ASISTIDO", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "PESO MUERTO A 1 PP Y 1 BB CL o HL", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "PESO MUERTO A 1 P Y 2 BB", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "PESO MUERTO A 1 PP CON BARRA", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "PERO MUERTO A 1 PP SOBRE INES", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "PESO MUERTO A 1 PP + ELAS LAT", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "PESO MUERTO A 1 PP EN BARRA DE PNTA CL", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "PESO MUERTO A 2 BB CON MANC", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "PESO MUERTO CON BARRA", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "DESPEGUE CON BARRA DESDE PISO", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "DESCENSO DE ISQUIOS A 2 PP", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "DESCENSO DE ISQUIOS A 1 PP", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "DESCENSO DE ISQUIOS FACILITADO", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "DESCENSO DE ISQUIOS + CONCENTRICO", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "BUENOS DIAS A 1 PP", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "DETENTE INSTANTANEO CUERPO EN BNCO", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "DETENTE INSTANTANEO PEGANDO EN FB", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "DETENTE INSTANTANEO CUERPO EN FB", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "DETENTE INSTANTANEO ASISTIDO A 2 PP", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "DETENTE INSTANTANEO ASISTIDO A 1 PP", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "DETENTE INSTANTANEO A 2 PP", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "DETENTE INSTANTANEO A 1 PP", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "ELONG. DINAM. C/TIRANTE MUSCULADOR", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "PASAJE + ABEDUC DE VALLAS CON SALT.", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "CURL DE ISQUIOS A 1 PP CON ELAS", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "CURL DE ISQUIOS ISOM A 1 PP", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "CULR DE ISQUIS ISOM CON ELAS", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "TRACCION DE DISCO CON ISQUIOS", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "CAMINATA ISQUIOS", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "PESO MUERTO BULGARO", "category": "PP CADENA POSTERIOR", "source": "CES757"}, {"name": "PRESS ARNOLD A 1 BB", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "PRESS ARNOLD", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "PRESS ARNOLD INEST A 1 BB", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "PRESS ARNOLD INEST", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "PRESS ARNOLD EN SPLIT A 1 BB", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "PRESS ARNOLD EN SPLT A 1 BB INES", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "PRESS ARNOLD A 1 BB Y EL OTRO ISOM", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "PRES ARNOLD ISOM", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "PRESS ARNOLD ALTERNO", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "PRESS ARNOLD ALTERNO INESTABLE", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "PRESS ARNOLD + ELAS LAT EN MANC 1 BB", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "PRESS ARNOLD + ELAS LAT SOBRE INES", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "PRESS ARNOLD CON BARRA ROMANA", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "PRESS ARNOLD CON B. ROM. E INEST.", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "PRESS ARNOLD EN BARRA DE PNTA A 2 BB", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "PRESS ARNOLD EN BARRA DE PNTA A 1 BB", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "PRESS ARNOLD EN B. PNTA A 2 BB INEST", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "PRESS ARNOLD EN B. PNTA A 1 BB INEST.", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "BI + PRESS ARNOLD A 1 BB", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "BI + PRESS ARNOLD", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "BI + PRESS ARNOLD INEST A 1 BB", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "BI + PRESS ARNOLD INEST", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "BI + PRESS ARNOLD EN SPLIT A 1 BB", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "BI + PRESS ARNOLD EN SPLT A 1 BB INES", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "BI + PRESS ARNOLD ALTERNO", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "BI + PRESS ARNOLD ALTERNO INESTABLE", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "VUELOS LATERALES CON MANC", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "VUELOS FRONTALES CON MANC", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "VUELOS ALTERNOS CON MANC", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "VUELOS LATERALES CON ELAS", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "VUELOS FRONTALES CON ELAS", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "VUELOS ALTERNOS CON ELAS", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "VUELOS LATERALES CON ELAS A 1 BB", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "VUELOS LATERALES CON MANC A 1 BB", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "VUELO FRONTAL CON BARRA", "category": "EMPUJE VERTICAL", "source": "CES757"}, {"name": "RECHAZOS DE HOMBROS CON MANC", "category": "EMPUJE VERTICAL", "source": "CES757"}];
+
+const CLOUD_SYNC_KEYS = ["settings","patients","routines","activeSessions","currentSessionId","currentProfileId","finishedToday","builder"];
+let cloudReady = false;
+let cloudHydrated = false;
+let cloudSaveTimer = null;
+let lastSavedJSON = '';
+
+function getSerializableState() {
+  const snapshot = {};
+  CLOUD_SYNC_KEYS.forEach(key => snapshot[key] = JSON.parse(JSON.stringify(state[key])));
+  return snapshot;
+}
+
+function applyCloudState(remoteState) {
+  if (!remoteState) return;
+  CLOUD_SYNC_KEYS.forEach(key => {
+    if (remoteState[key] !== undefined) state[key] = JSON.parse(JSON.stringify(remoteState[key]));
+  });
+  if (!state.builder) state.builder = { patientId: '', name:'', observations:'', exercises:[] };
+  if (!Array.isArray(state.activeSessions)) state.activeSessions = [];
+  if (!Array.isArray(state.patients)) state.patients = [];
+  if (!Array.isArray(state.routines)) state.routines = [];
+}
+
+async function writeCloudState() {
+  if (!cloudReady) return;
+  const payload = getSerializableState();
+  const json = JSON.stringify(payload);
+  if (json === lastSavedJSON) return;
+  lastSavedJSON = json;
+  try {
+    await CLOUD_DOC_REF.set({
+      state: payload,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }, { merge: true });
+  } catch (error) {
+    console.error('Error guardando en Firebase:', error);
+  }
+}
+
+function scheduleCloudSave(delay = 700) {
+  if (!cloudReady) return;
+  clearTimeout(cloudSaveTimer);
+  cloudSaveTimer = setTimeout(writeCloudState, delay);
+}
+
+function markDirty(delay = 700) {
+  scheduleCloudSave(delay);
+}
+
+function initCloudSync() {
+  CLOUD_DOC_REF.onSnapshot(async snap => {
+    try {
+      if (!snap.exists) {
+        cloudReady = true;
+        cloudHydrated = true;
+        await writeCloudState();
+        return;
+      }
+      const remoteState = snap.data() && snap.data().state ? snap.data().state : null;
+      if (!remoteState) {
+        cloudReady = true;
+        cloudHydrated = true;
+        await writeCloudState();
+        return;
+      }
+      const incomingJSON = JSON.stringify(remoteState);
+      cloudReady = true;
+      if (!cloudHydrated) {
+        applyCloudState(remoteState);
+        lastSavedJSON = incomingJSON;
+        cloudHydrated = true;
+        settingsAccent = state.settings?.accent || settingsAccent;
+        applySettings();
+        renderAll();
+        return;
+      }
+      if (incomingJSON === lastSavedJSON) return;
+      applyCloudState(remoteState);
+      lastSavedJSON = incomingJSON;
+      settingsAccent = state.settings?.accent || settingsAccent;
+      applySettings();
+      renderAll();
+    } catch (error) {
+      console.error('Error sincronizando desde Firebase:', error);
+    }
+  }, error => {
+    console.error('Error inicializando Firebase:', error);
+    cloudReady = false;
+  });
+}
 
 const state = {
   settings: { userName:'Dr. Ruiz', theme:'dark', accent:'#53efb9' },
@@ -403,22 +909,26 @@ document.getElementById('themeDarkBtn').addEventListener('click', ()=> {
   document.getElementById('themeDarkBtn').classList.add('active');
   document.getElementById('themeLightBtn').classList.remove('active');
   applySettings();
+  markDirty();
 });
 document.getElementById('themeLightBtn').addEventListener('click', ()=> {
   state.settings.theme = 'light';
   document.getElementById('themeLightBtn').classList.add('active');
   document.getElementById('themeDarkBtn').classList.remove('active');
   applySettings();
+  markDirty();
 });
 document.querySelectorAll('.color-choice').forEach(btn => btn.addEventListener('click', ()=> {
   settingsAccent = btn.dataset.color;
   document.querySelectorAll('.color-choice').forEach(b => b.classList.toggle('active', b === btn));
   state.settings.accent = settingsAccent;
   applySettings();
+  markDirty();
 }));
 
 function saveSettings() {
   closeSheet();
+  markDirty();
 }
 
 function cardMarkup(item, meta) {
@@ -595,6 +1105,7 @@ function startRoutine(id) {
   state.currentSessionId = sessionId;
   state.hourAlertShown = false;
   renderAll();
+  markDirty();
   showScreen('execution');
 }
 
@@ -604,6 +1115,7 @@ function toggleExercise(i) {
   s.exercises[i].completed = !s.exercises[i].completed;
   renderExecution();
   renderHome();
+  markDirty();
 }
 
 function finishSession() {
@@ -621,6 +1133,7 @@ function finishSession() {
   state.activeSessions = state.activeSessions.filter(x => x.id !== s.id);
   state.currentSessionId = state.activeSessions[0]?.id || null;
   renderAll();
+  markDirty();
   showScreen('home');
 }
 
@@ -632,6 +1145,7 @@ function createPatient() {
     phase:'Evaluación inicial', antecedentes:'Sin antecedentes cargados', observaciones:'Paciente creado manualmente.', history:[]
   });
   renderAll();
+  markDirty();
   showScreen('patients');
 }
 
@@ -655,6 +1169,7 @@ function editPatient(id) {
   p.observaciones = obs.trim() || p.observaciones;
   state.routines.forEach(r => { if (r.patientId === p.id) r.patientName = p.name; });
   renderAll();
+  markDirty();
 }
 
 function editCurrentPatient() {
@@ -670,12 +1185,14 @@ function duplicateRoutine(id) {
   copy.name = r.name + ' copia';
   state.routines.unshift(copy);
   renderRoutines();
+  markDirty();
   notify('Rutina duplicada');
 }
 
 function deleteRoutine(id) {
   state.routines = state.routines.filter(x => x.id !== id);
   renderAll();
+  markDirty();
 }
 
 function loadRoutineToBuilder(id) {
@@ -689,6 +1206,7 @@ function loadRoutineToBuilder(id) {
   };
   showScreen('builder');
   renderBuilder();
+  markDirty();
 }
 
 function loadTemplateToBuilder(id) {
@@ -702,11 +1220,13 @@ function loadTemplateToBuilder(id) {
   };
   showScreen('builder');
   renderBuilder();
+  markDirty();
 }
 
 function resetBuilder() {
   state.builder = { patientId: state.patients[0]?.id || '', name:'', observations:'', exercises:[] };
   renderBuilder();
+  markDirty();
 }
 
 function addCustomExercise() {
@@ -715,6 +1235,7 @@ function addCustomExercise() {
   const pres = prompt('Prescripción', '3 sets · 10 reps') || '3 sets · 10 reps';
   state.builder.exercises.push({ name, prescription: pres, notes:'', completed:false });
   renderBuilder();
+  markDirty();
 }
 
 function addLibraryExercise(name) {
@@ -724,6 +1245,7 @@ function addLibraryExercise(name) {
   }
   state.builder.exercises.push({ name, prescription:'3 sets · 10 reps', notes:'', completed:false });
   renderBuilder();
+  markDirty();
   closeSheet();
   showScreen('builder');
 }
@@ -731,6 +1253,7 @@ function addLibraryExercise(name) {
 function removeBuilderExercise(i) {
   state.builder.exercises.splice(i,1);
   renderBuilder();
+  markDirty();
 }
 
 function saveBuiltRoutine() {
@@ -754,6 +1277,7 @@ function saveBuiltRoutine() {
   });
   resetBuilder();
   renderAll();
+  markDirty();
   showScreen('routines');
   notify('Rutina guardada');
 }
@@ -766,13 +1290,13 @@ function openPatientProfile(id) {
 
 document.getElementById('routineSearch').addEventListener('input', renderRoutines);
 document.getElementById('patientSearch').addEventListener('input', renderPatients);
-document.getElementById('builderPatient').addEventListener('change', e => state.builder.patientId = e.target.value);
-document.getElementById('builderRoutineName').addEventListener('input', e => state.builder.name = e.target.value);
-document.getElementById('builderObservations').addEventListener('input', e => state.builder.observations = e.target.value);
-document.getElementById('settingsUserName').addEventListener('input', e => { state.settings.userName = e.target.value.trim() || 'Dr. Ríos'; applySettings(); });
-document.getElementById('pauseBtn').addEventListener('click', ()=>{ const s=getCurrentSession(); if(s){ s.running=false; renderExecution(); renderHome(); } });
-document.getElementById('resumeBtn').addEventListener('click', ()=>{ const s=getCurrentSession(); if(s){ s.running=true; renderExecution(); renderHome(); } });
-document.getElementById('resetSessionBtn').addEventListener('click', ()=>{ const s=getCurrentSession(); if(s){ s.seconds=0; s.reached60=false; state.hourAlertShown=false; s.exercises.forEach(e=>e.completed=false); renderAll(); } });
+document.getElementById('builderPatient').addEventListener('change', e => { state.builder.patientId = e.target.value; markDirty(900); });
+document.getElementById('builderRoutineName').addEventListener('input', e => { state.builder.name = e.target.value; markDirty(900); });
+document.getElementById('builderObservations').addEventListener('input', e => { state.builder.observations = e.target.value; markDirty(900); });
+document.getElementById('settingsUserName').addEventListener('input', e => { state.settings.userName = e.target.value.trim() || 'Dr. Ríos'; applySettings(); markDirty(900); });
+document.getElementById('pauseBtn').addEventListener('click', ()=>{ const s=getCurrentSession(); if(s){ s.running=false; renderExecution(); renderHome(); markDirty(); } });
+document.getElementById('resumeBtn').addEventListener('click', ()=>{ const s=getCurrentSession(); if(s){ s.running=true; renderExecution(); renderHome(); markDirty(); } });
+document.getElementById('resetSessionBtn').addEventListener('click', ()=>{ const s=getCurrentSession(); if(s){ s.seconds=0; s.reached60=false; state.hourAlertShown=false; s.exercises.forEach(e=>e.completed=false); renderAll(); markDirty(); } });
 document.getElementById('finishSessionBtn').addEventListener('click', finishSession);
 document.getElementById('fabActionBtn').addEventListener('click', ()=> {
   const active = document.querySelector('.nav-btn.active')?.dataset.nav;
@@ -794,6 +1318,7 @@ setInterval(()=> {
   if (changed) {
     renderExecution();
     renderHome();
+    if (state.activeSessions.some(sess => sess.seconds % 15 === 0)) markDirty(400);
   }
 }, 1000);
 
@@ -831,6 +1356,7 @@ renderProkinesis();
 renderCES();
 applySettings();
 renderAll();
+initCloudSync();
 </script>
 </body>
 </html>
