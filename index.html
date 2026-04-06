@@ -411,6 +411,22 @@ body.theme-light .digital{
 .lib-item.lib-selected .lib-check {
   background: var(--accent); border-color: var(--accent);
 }
+.library-footer-sticky {
+  position: sticky; bottom: 0; left: 0; right: 0;
+  padding: 14px 0 4px; margin-top: 12px;
+  background: linear-gradient(180deg, rgba(12,19,28,0) 0%, rgba(12,19,28,.88) 28%, rgba(12,19,28,.98) 100%);
+  z-index: 8;
+}
+body.theme-light .library-footer-sticky {
+  background: linear-gradient(180deg, rgba(238,245,251,0) 0%, rgba(238,245,251,.88) 28%, rgba(238,245,251,.98) 100%);
+}
+#libraryAddSelectedBtn {
+  width: 100%; min-height: 56px;
+  box-shadow: 0 10px 24px rgba(83,239,185,.22);
+}
+#libraryAddSelectedBtn:disabled {
+  opacity: .5; box-shadow: none;
+}
 .bex-prescription {
   font-size: .82rem; color: var(--muted); margin-top: 4px;
   cursor: pointer; transition: color .2s;
@@ -670,7 +686,7 @@ body.theme-light .digital{
         </div>
         <div class="home-stat full">
           <div class="k">Sesiones hoy</div>
-          <div class="v"><span id="homeFinishedToday">0</span> <small>/ 12 cupos</small></div>
+          <div class="v"><span id="homeFinishedToday">0</span></div>
         </div>
       </div>
 
@@ -810,7 +826,7 @@ body.theme-light .digital{
           <div class="searchbar"><span>⌕</span><input id="searchCES" type="text" placeholder="Buscar ejercicio en CES757"></div>
           <div class="library-list" id="listCES"></div>
         </div>
-        <button id="libraryAddSelectedBtn" class="primary-btn" style="width:100%;margin-top:12px" onclick="addSelectedLibraryExercises()" disabled>Seleccioná ejercicios</button>
+        <div class="library-footer-sticky"><button id="libraryAddSelectedBtn" class="primary-btn" type="button" onclick="addSelectedLibraryExercises()" disabled>Listo</button></div>
       </div>
 
       <div id="sheetSettings" class="sheet-view hidden">
@@ -981,6 +997,14 @@ let libraryTargetBuilder = false;
 let settingsAccent = state.settings.accent;
 let librarySelected = new Set();
 let builderPatientSelectBound = false;
+function syncBuilderRoutineNameWithPatient(patientId) {
+  const patient = state.patients.find(p => p.id === patientId);
+  if (!patient) return;
+  state.builder.name = patient.name;
+  const input = document.getElementById('builderRoutineName');
+  if (input) input.value = patient.name;
+}
+
 
 function notify(msg){ console.log(msg); }
 
@@ -1107,7 +1131,7 @@ function updateLibraryAddBtn() {
   const btn = document.getElementById('libraryAddSelectedBtn');
   if (!btn) return;
   const count = librarySelected.size;
-  btn.textContent = count > 0 ? `Agregar ${count} ejercicio${count > 1 ? 's' : ''}` : 'Seleccioná ejercicios';
+  btn.textContent = count > 0 ? `Listo${count > 0 ? ` (${count})` : ''}` : 'Listo';
   btn.disabled = count === 0;
 }
 
@@ -1116,18 +1140,30 @@ function addSelectedLibraryExercises() {
     notify('Abre la biblioteca desde el constructor de rutina para agregar ejercicios.');
     return;
   }
+  const selectedNames = Array.from(librarySelected);
+  if (!selectedNames.length) {
+    notify('Seleccioná ejercicios');
+    return;
+  }
   const allLibraryExercises = [...prokinesis, ...ces757];
-  librarySelected.forEach(name => {
+  const existingKeys = new Set(state.builder.exercises.map(e => `${e.name}__${e.prescription || ''}`));
+  let addedCount = 0;
+  selectedNames.forEach(name => {
     const ex = allLibraryExercises.find(e => e.name === name);
-    if (ex) state.builder.exercises.push({ name: ex.name, prescription: ex.prescription || '3 sets · 10 reps', notes: '', completed: false });
+    if (!ex) return;
+    const prescription = ex.prescription || '3 sets · 10 reps';
+    const key = `${ex.name}__${prescription}`;
+    if (existingKeys.has(key)) return;
+    state.builder.exercises.push({ name: ex.name, prescription, notes: '', completed: false });
+    existingKeys.add(key);
+    addedCount += 1;
   });
-  const addedCount = librarySelected.size;
   librarySelected.clear();
   closeSheet();
+  showScreen('builder');
   renderBuilder();
   markDirty();
-  showScreen('builder');
-  notify(addedCount ? 'Ejercicios agregados' : 'Seleccioná ejercicios');
+  notify(addedCount ? `${addedCount} ejercicio${addedCount > 1 ? 's' : ''} agregado${addedCount > 1 ? 's' : ''}` : 'Esos ejercicios ya estaban cargados');
 }
 document.querySelectorAll('[data-libtab]').forEach(btn => btn.addEventListener('click', ()=> {
   activeLib = btn.dataset.libtab;
@@ -1202,7 +1238,7 @@ function renderRoutines() {
 function renderPatients() {
   const q = (document.getElementById('patientSearch').value || '').trim().toLowerCase();
   const filtered = state.patients.filter(p => !q || p.name.toLowerCase().includes(q));
-  document.getElementById('patientsList').innerHTML = filtered.map(p => `<div class="patient-card" onclick="openPatientProfile('${p.id}')"><div class="between"><div class="row" style="flex:1"><div class="avatar-sm">${p.name.split(' ').map(x=>x[0]).slice(0,2).join('')}</div><div><div class="patient-name">${p.name}</div><div class="mini">Fase de tratamiento: ${p.phase}</div></div></div></div><div class="tags"><span class="tag">${p.phone}</span><span class="tag">${p.history.length} sesiones</span></div><div class="mini" style="margin-top:10px">${p.observaciones}</div></div>`).join('') || '<div class="detail-card"><div class="mini">No hay pacientes para mostrar.</div></div>';
+  document.getElementById('patientsList').innerHTML = filtered.map(p => `<div class="patient-card" onclick="openPatientProfile('${p.id}')"><div class="between" style="align-items:flex-start"><div class="row" style="flex:1;min-width:0"><div class="avatar-sm">${p.name.split(' ').map(x=>x[0]).slice(0,2).join('')}</div><div style="min-width:0"><div class="patient-name">${p.name}</div><div class="mini">Fase de tratamiento: ${p.phase}</div></div></div><div class="routine-menu-wrap" onclick="event.stopPropagation()"><button class="routine-menu-btn" onclick="toggleRoutineMenu(this)" title="Más opciones">···</button><div class="routine-menu-dropdown hidden"><button class="routine-menu-item" onclick="editPatient('${p.id}'); closeAllMenus()">✎ Editar</button><button class="routine-menu-item" onclick="duplicatePatient('${p.id}'); closeAllMenus()">⧉ Duplicar</button><button class="routine-menu-item danger" onclick="deletePatient('${p.id}'); closeAllMenus()">✕ Eliminar</button></div></div></div><div class="tags"><span class="tag">${p.phone}</span><span class="tag">${p.history.length} sesiones</span></div><div class="mini" style="margin-top:10px">${p.observaciones}</div></div>`).join('') || '<div class="detail-card"><div class="mini">No hay pacientes para mostrar.</div></div>';
 }
 
 function editableField(patientId, field, label, value, suffix='') {
@@ -1287,6 +1323,7 @@ function renderBuilderPatientSelect() {
   list.querySelectorAll('li').forEach(li => li.addEventListener('click', () => {
     state.builder.patientId = li.dataset.id;
     label.textContent = li.textContent;
+    syncBuilderRoutineNameWithPatient(li.dataset.id);
     list.querySelectorAll('li').forEach(i => i.classList.remove('selected'));
     li.classList.add('selected');
     list.classList.add('hidden');
@@ -1340,6 +1377,12 @@ function savePrescription(idx) {
 
 function renderBuilder() {
   renderBuilderPatientSelect();
+  if (state.builder.patientId) {
+    const selectedPatient = state.patients.find(p => p.id === state.builder.patientId);
+    if (selectedPatient && (!state.builder.name || state.builder.name !== selectedPatient.name)) {
+      state.builder.name = selectedPatient.name;
+    }
+  }
   document.getElementById('builderRoutineName').value = state.builder.name;
   document.getElementById('builderObservations').value = state.builder.observations;
   document.getElementById('builderCount').textContent = `${state.builder.exercises.length} ejercicios`;
@@ -1467,6 +1510,32 @@ function editCurrentPatient() {
   renderPatientProfile();
 }
 
+function duplicatePatient(id) {
+  const p = state.patients.find(x => x.id === id);
+  if (!p) return;
+  const copy = JSON.parse(JSON.stringify(p));
+  copy.id = 'p' + Date.now();
+  copy.name = p.name + ' copia';
+  copy.email = p.email ? 'copia_' + p.email : '';
+  state.patients.unshift(copy);
+  renderAll();
+  markDirty();
+  notify('Paciente duplicado');
+}
+
+function deletePatient(id) {
+  state.patients = state.patients.filter(x => x.id !== id);
+  state.routines = state.routines.filter(r => r.patientId !== id);
+  state.activeSessions = state.activeSessions.filter(s => s.patientId !== id);
+  if (state.currentProfileId === id) state.currentProfileId = state.patients[0]?.id || null;
+  if (state.currentSessionId && !state.activeSessions.some(s => s.id === state.currentSessionId)) {
+    state.currentSessionId = state.activeSessions[0]?.id || null;
+  }
+  renderAll();
+  markDirty();
+  notify('Paciente eliminado');
+}
+
 function duplicateRoutine(id) {
   const r = state.routines.find(x => x.id === id);
   if (!r) return;
@@ -1541,7 +1610,14 @@ function removeBuilderExercise(i) {
 function saveBuiltRoutine() {
   const patientId = state.builder.patientId;
   const p = state.patients.find(x => x.id === patientId);
-  const name = document.getElementById('builderRoutineName').value.trim();
+  let name = document.getElementById('builderRoutineName').value.trim();
+  if (!name && state.builder.patientId) {
+    const selectedPatient = state.patients.find(p => p.id === state.builder.patientId);
+    if (selectedPatient) {
+      name = selectedPatient.name;
+      state.builder.name = selectedPatient.name;
+    }
+  }
   const obs = document.getElementById('builderObservations').value.trim();
   if (!p) { notify('Selecciona un paciente'); return; }
   if (!name) { notify('Coloca un nombre para la rutina'); return; }
@@ -1645,6 +1721,8 @@ window.saveSettings = saveSettings;
 window.createPatient = createPatient;
 window.editPatient = editPatient;
 window.editCurrentPatient = editCurrentPatient;
+window.duplicatePatient = duplicatePatient;
+window.deletePatient = deletePatient;
 window.loadRoutineToBuilder = loadRoutineToBuilder;
 window.loadTemplateToBuilder = loadTemplateToBuilder;
 window.toggleRoutineMenu = toggleRoutineMenu;
